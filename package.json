@@ -1,0 +1,25 @@
+{
+  "name": "circleball",
+  "version": "0.0.1",
+  "description": "This is circleball",
+  "engines": {
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": ">4.0.0",
+    "body-parser": ">0.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tetete2016/circleball.git"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "Apache 2.0"
+}
