@@ -60,13 +60,14 @@ function ui(){
     if(state=="wait"){
         if(count.style.visibility!="visible")
             count.style.visibility="visible";
-        count.innerHTML="Race will begin in "+ Math.floor((start- timenow+lag)*0.001)+"s";
+        count.innerHTML="スタートまで"+Math.floor((start- timenow+lag)*0.001)+"秒";
     }else if(state=="result"){
-        laptxt+="next race will begin"+ Math.floor((next- timenow+lag)*0.001)+"s";
+        laptxt+="次のレースは"+ Math.floor((next- timenow+lag)*0.001)+"秒後です";
     }else if(state=="race"){
-        laptxt+="race will end "+ Math.floor((end- timenow+lag)*0.001)+"s";
+        //laptxt+="レースは"+ Math.floor((end- timenow+lag)*0.001)+"秒後に強制的に終了します";
+        laptxt+=player.lap+"周目";
     }
-    laptxt+=player.cp+"lap:"+player.lap+"order:";
+    //laptxt+=player.cp+"lap:"+player.lap+"order:";
 
     var ordertxt="";
     if(order==0){
@@ -95,7 +96,7 @@ function ui(){
             sorted.push(othercar[i]);
         }
         sorted.push(player);
-        sorted.some(function(a,b){
+        sorted.sort(function(a,b){
             if(a.goal!=null){
                 if(b.goal==null){
                     return -1;
@@ -139,12 +140,16 @@ function ui(){
         for(var i=0;i<sorted.length;i++){
             var name="player "+sorted[i].cid;
             var content=sorted[i].goal;
+            if(sorted[i].goal==null){content="レース中";}else{
+                var t=sorted[i].goal*0.001;
+                content=Math.floor(t/60)+"分"+(Math.floor(t)%60)+"秒"+(Math.floor(t*1000)%1000);
+            }
             if(sorted[i].cid==player.cid)name="YOU";
             contentArr1.push([name,content]);
             //contentArr1.push(["test"+i,"aaa"]);
         }
         for(var i=0;i<contentArr1.length;i++){
-            tabletxt+="<tr><td style='"+tdStyle+"'>player "+contentArr1[i][0]+"</td>"+"<td style='"+tdStyle+"'>"+contentArr1[i][1]+"</td></tr>"
+            tabletxt+="<tr><td style='"+tdStyle+"'>"+contentArr1[i][0]+"</td>"+"<td style='"+tdStyle+"'>"+contentArr1[i][1]+"</td></tr>"
         }
         if(tabletxt!=tabletxt1){
             //console.log(resultTable.innerHTML);

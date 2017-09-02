@@ -33,6 +33,7 @@ var cp=[
     {x:-92,z:-40},//23 10
     {x:-60,z:-8},//15 2
     {x:-16,z:-22},//4 5.6
+    {x:0,z:0}
 ];
 
 var carGeo = new THREE.CubeGeometry(1, 1, 1);
@@ -135,8 +136,8 @@ var clientstart=null;
 
 var state="wait";
 var start=new Date().getTime()+10000;
-var end=new Date().getTime()+60000;
-var next=end+70000;
+var end=new Date().getTime()+180000;
+var next=end+10000;
 var sent=false;
 var gameid=null;
 var timediff=null;
@@ -276,6 +277,8 @@ function timer(){
     if(state=="race"){
         player.rot+=handle*dt*1;
         player.acc=1;
+        if(player.goal!=null)
+            player.acc=0;
         player.physics(dt,true);
     }else{
         player.acc=0;
@@ -311,7 +314,7 @@ function timer(){
     //camera.lookAt(player.mesh);
 
     //camera.rotation.y=player.rot;
-    if(lap>LAP_ENDS&&player.goal==null){
+    if(player.lap>LAP_ENDS&&player.goal==null){
         player.goal=timenow-start;
     }
     renderer.render( scene, camera );  
