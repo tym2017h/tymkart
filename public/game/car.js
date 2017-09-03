@@ -35,6 +35,7 @@ var Car=function(){
         this.mesh.position.y=0.25;
         this.mesh.rotation.y=this.rot;
     }
+    this.collidedTime=0;
     this.physics=function(dt,isplayer){
         //ma+kv=0
         //k=-ma/vel
@@ -69,9 +70,17 @@ var Car=function(){
             if (obj.length > 0) {
                 var d=obj[0].distance;
                 if(d<0.5){
+                    if(timenow-this.collidedTime<100){
+                    this.vel.x=-rv.x*v;
+                    this.vel.z=-rv.y*v;
+                    }else{
                     this.vel.x+=-rv.x*v;
                     this.vel.z+=-rv.y*v;
+                        
+                    }
                     collided=true;
+                    
+                    this.collidedTime=timenow;
                 }
             } 
         }
