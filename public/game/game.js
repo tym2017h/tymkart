@@ -174,6 +174,7 @@ function updatecars(cs){
                 othercar[j].vel=cs[i].vel;
                 othercar[j].rot=cs[i].rot;
                 othercar[j].acc=cs[i].acc;
+                othercar[j].goal=cs[i].goal;
                 othercar[j].audience=cs[i].audience;
                 othercar[j].physics(lag*0.001);
                 exists=true;
@@ -186,6 +187,7 @@ function updatecars(cs){
             newcar.vel=cs[i].vel;
             newcar.rot=cs[i].rot;
             newcar.acc=cs[i].acc;
+            newcar.goal=cs[i].goal;
             newcar.audience=cs[i].audience;
             if(carobj!=null){
                 var obj1=carobj.GdeepCloneMaterials();
@@ -282,8 +284,9 @@ function timer(){
     if(state=="race"){
         player.rot+=handle*dt*1;
         player.acc=1;
-        if(player.goal!=null)
+        if(player.goal!=null){
             player.acc=0;
+        }
         player.physics(dt,true);
     }else{
         player.acc=0;
@@ -299,13 +302,16 @@ function timer(){
             othercar[i].reset();
         }
         othercar[i].updateMesh();
-        if(othercar[i].lap>player.lap){
+        if(othercar[i].goal!=null&&player.goal==null){
             order++;
-        }else if(othercar[i].cp>player.cp){
-            order++;
-        }else if(othercar[i].cp==player.cp&&othercar[i].dsq<player.dsq){
-            order++;
-        }
+        }else
+            if(othercar[i].lap>player.lap){
+                order++;
+            }else if(othercar[i].cp>player.cp){
+                order++;
+            }else if(othercar[i].cp==player.cp&&othercar[i].dsq<player.dsq){
+                order++;
+            }
     }
     if(player.mesh!=null){
         camera.position.x=player.mesh.position.x-Math.sin(player.rot)*12;
