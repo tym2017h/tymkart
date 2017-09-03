@@ -94,17 +94,18 @@ function ui(){
         var sorted=[];
         for(var i=0;i<othercar.length;i++){
             sorted.push(othercar[i]);
+            if(othercar[i].goal!=null)console.log("goal"+i);
         }
         sorted.push(player);
         sorted.sort(function(a,b){
             if(a.goal!=null){
                 if(b.goal==null){
-                    return -1;
+                    return -1;//a
                 }else{
                     if(b.goal>a.goal){
-                        return -1;
+                        return -1;//a
                     }else{
-                        return 1;
+                        return 1;//b
                     }
                 }
             }
