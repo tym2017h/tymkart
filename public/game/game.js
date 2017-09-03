@@ -57,13 +57,18 @@ loadstats++;
         //obj.position.set(10,0,30);
         //obj.rotation.y=Math.PI/4*5;
         obj.scale.set(4,4,4);
-        var mesh=obj.getChildByName("cube_Cube.001",true);
-        console.log(mesh);
-        console.log(mesh.children);
-        targetList.push(mesh);
+        for(var i=0;i<=6;i++){
+            setchildcollision(obj,"wall"+i);
+        }
         scene.add( obj );
+        console.log(targetList);
     });
 })();
+function setchildcollision(obj,name){
+    var mesh=obj.getChildByName(name,true);
+    console.log(mesh);
+    targetList.push(mesh);
+}
 var carobj;
 loadstats++;
 
