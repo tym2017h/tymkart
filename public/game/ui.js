@@ -52,6 +52,10 @@ resultTable.appendChild(tbody);
 document.body.appendChild(resultTable);
 var tabletxt1="";
 function ui(){
+    netdiv.innerHTML="";
+    for(var i=0;i<othercar.length;i++){
+        netdiv.innerHTML+=othercar[i].goal+"<br>";
+    }
     var laptxt=state+" ";
     if(state!=="wait"){
         if(count.style.visibility!="hidden")
@@ -94,7 +98,8 @@ function ui(){
         var sorted=[];
         for(var i=0;i<othercar.length;i++){
             sorted.push(othercar[i]);
-            if(othercar[i].goal!=null)console.log("goal"+i);
+            console.log(othercar[i].goal);
+            //if(othercar[i].goal!=null)console.log("goal"+i);
         }
         sorted.push(player);
         sorted.sort(function(a,b){
