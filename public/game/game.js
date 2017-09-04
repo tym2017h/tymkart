@@ -41,11 +41,16 @@ var carMatA = new THREE.MeshLambertMaterial( { color: 0xffffff,transparent:true,
 var carMat = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 var player=new Car();
 //player.setMesh(carGeo,carMat);
-
-var light = new THREE.DirectionalLight(sun,2);
+(function(){
+var light = new THREE.DirectionalLight(sun,1);
 light.position.set(1, 1, 2).normalize();
 scene.add( light );
-
+})();
+(function(){
+var light = new THREE.DirectionalLight(sun,1);
+light.position.set(-1, 1, -2).normalize();
+scene.add( light );
+})();
 var l2 = new THREE.AmbientLight(ambient);
 scene.add( l2 );
 var loadstats=0;
