@@ -1,5 +1,5 @@
 # Blender MTL File: 'tym.blend'
-# Material Count: 9
+# Material Count: 10
 
 newmtl None
 Ns 0
@@ -9,15 +9,16 @@ Ks 0.8 0.8 0.8
 d 1
 illum 2
 
-newmtl Translucent_Glass_Gray
+newmtl concrete
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
-Kd 0.501961 0.501961 0.501961
+Kd 0.640000 0.640000 0.640000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
-Ni -1.000000
-d 0.498039
+Ni 1.000000
+d 1.000000
 illum 2
+map_Kd window.png
 
 newmtl grass
 Ns 96.078431
@@ -32,12 +33,13 @@ illum 2
 newmtl material
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
-Kd 1.000000 1.000000 1.000000
+Kd 0.024701 0.000000 1.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni -1.000000
 d 1.000000
 illum 2
+map_Kd window.png
 
 newmtl playground
 Ns 96.078431
@@ -69,6 +71,17 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+
+newmtl roof
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.273911 0.273911 0.273911
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd window.png
 
 newmtl tile
 Ns 96.078431
