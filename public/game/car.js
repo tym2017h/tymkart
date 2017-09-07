@@ -61,7 +61,8 @@ var Car=function(){
         this.vel.z+=this.vel.z*drag*dt;
         var res=8;
         var collided=false;
-
+        var mg=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
+        var dpdt=mg*dt;
         for(var i=-res/2;i<res/2;i++){
             if(collided)continue;
             var rv=rotate(this.vel.x/v,this.vel.z/v,Math.PI/2/res*i);
@@ -69,7 +70,7 @@ var Car=function(){
             var obj = ray.intersectObjects(targetList);
             if (obj.length > 0) {
                 var d=obj[0].distance;
-                if(d<0.5){
+                if(d<0.5+dpdt){
                     if(timenow-this.collidedTime<100){
                     this.vel.x=-rv.x*v;
                     this.vel.z=-rv.y*v;

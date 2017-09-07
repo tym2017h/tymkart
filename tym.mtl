@@ -1,5 +1,5 @@
 # Blender MTL File: 'tym.blend'
-# Material Count: 10
+# Material Count: 15
 
 newmtl None
 Ns 0
@@ -8,6 +8,33 @@ Kd 0.8 0.8 0.8
 Ks 0.8 0.8 0.8
 d 1
 illum 2
+map_Kd grass.png
+
+newmtl None_NONE
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+
+newmtl None_tree.png.029
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd tree.png
+
+newmtl None_tree.png.050
+Ns 0
+Ka 0.000000 0.000000 0.000000
+Kd 0.8 0.8 0.8
+Ks 0.8 0.8 0.8
+d 1
+illum 2
+map_Kd tree.png
 
 newmtl concrete
 Ns 96.078431
@@ -20,15 +47,16 @@ d 1.000000
 illum 2
 map_Kd window.png
 
-newmtl grass
+newmtl fence
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
-Kd 0.006616 0.640000 0.000000
+Kd 0.001951 0.074178 0.000000
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.000000
-d 1.000000
+d 0.476190
 illum 2
+map_Kd public/game/models/tile.png
 
 newmtl material
 Ns 96.078431
@@ -83,6 +111,17 @@ d 1.000000
 illum 2
 map_Kd window.png
 
+newmtl tennis
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.006616 0.640000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tennis.png
+
 newmtl tile
 Ns 96.078431
 Ka 1.000000 1.000000 1.000000
@@ -93,6 +132,17 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd public/game/models/tile.png
+
+newmtl tree
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.640000 0.000000 0.001061
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd tree.png
 
 newmtl water
 Ns 96.078431

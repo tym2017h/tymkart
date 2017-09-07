@@ -42,14 +42,14 @@ var carMat = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 var player=new Car();
 //player.setMesh(carGeo,carMat);
 (function(){
-var light = new THREE.DirectionalLight(sun,1);
-light.position.set(1, 1, 2).normalize();
-scene.add( light );
+    var light = new THREE.DirectionalLight(sun,1);
+    light.position.set(1, 1, 2).normalize();
+    scene.add( light );
 })();
 (function(){
-var light = new THREE.DirectionalLight(sun,1);
-light.position.set(-1, 1, -2).normalize();
-scene.add( light );
+    var light = new THREE.DirectionalLight(sun,1);
+    light.position.set(-1, 1, -2).normalize();
+    scene.add( light );
 })();
 var l2 = new THREE.AmbientLight(ambient);
 scene.add( l2 );
@@ -323,7 +323,8 @@ function timer(){
         camera.position.y=3;
         camera.position.z=player.mesh.position.z-Math.cos(player.rot)*12;
         //camera.rotation.x=Math.PI/4;
-        camera.lookAt(player.mesh.position);
+        var p={x:player.mesh.position.x,y:3,z:player.mesh.position.z};
+        camera.lookAt(p);
     }
     //alert(camera.rotation.x+","+camera.rotation.y+","+camera.rotation.z);
     //camera.rotation.y=0;
