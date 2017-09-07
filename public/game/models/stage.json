@@ -1758,7 +1758,7 @@
 			"uuid": "B0C67EDD-0F12-4BFD-BF3D-212BF5E5F667",
 			"type": "MeshPhongMaterial",
 			"name": "roof",
-			"color": 16777215,
+			"color": 6710886,
 			"emissive": 0,
 			"specular": 1118481,
 			"shininess": 30,
@@ -2178,7 +2178,7 @@
         },
         {
             "uuid": "sandtex",          
-            "image": "grassimg",
+            "image": "sandimg",
             "wrap": ["RepeatWrapping","RepeatWrapping"]
         },
         {
