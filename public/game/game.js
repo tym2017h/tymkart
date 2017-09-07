@@ -2,7 +2,7 @@ var width = window.innerWidth;
 var height = window.innerHeight;
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(width, height);
-renderer.setClearColor(0xeeeeff);
+renderer.setClearColor(0xbbccff);
 renderer.domElement.style.position = "absolute";
 renderer.domElement.style.zIndex = "0";
 document.body.appendChild(renderer.domElement);
@@ -40,6 +40,39 @@ var carGeo = new THREE.CubeGeometry(1, 1, 1);
 var carMatA = new THREE.MeshLambertMaterial( { color: 0xffffff,transparent:true,opacity:0.5} );
 var carMat = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 var player=new Car();
+
+var arrow;
+(function(){
+    var geom = new THREE.Geometry(); 
+    var v1 = new THREE.Vector3(1,0,2);
+    var v2 = new THREE.Vector3(-1,0,2);
+    var v3 = new THREE.Vector3(0,0,3);
+
+    geom.vertices.push(v1);
+    geom.vertices.push(v2);
+    geom.vertices.push(v3);
+    
+    geom.vertices.push(new THREE.Vector3(-0.25,0,2));
+    geom.vertices.push(new THREE.Vector3(0.25,0,0));
+    geom.vertices.push(new THREE.Vector3(-0.25,0,0));
+    geom.vertices.push(new THREE.Vector3(-0.25,0,2));
+    geom.vertices.push(new THREE.Vector3(0.25,0,2));
+    geom.vertices.push(new THREE.Vector3(0.25,0,0));
+
+    geom.faces.push( new THREE.Face3( 0, 1, 2 ) );
+    geom.faces.push( new THREE.Face3( 3, 4, 5 ) );
+    geom.faces.push( new THREE.Face3( 6, 7, 8 ) );
+    
+    geom.faces.push( new THREE.Face3( 2, 1, 0 ) );
+    geom.faces.push( new THREE.Face3( 5, 4, 3 ) );
+    geom.faces.push( new THREE.Face3( 8, 7, 6 ) );
+    
+    //geom=new THREE.CubeGeometry(,1,1);
+    arrow = new THREE.Mesh( geom, new THREE.MeshBasicMaterial({color:0xffff00,transparent:true,opacity:0.5}) );
+    scene.add(arrow);
+    arrow.position.y=1;
+})();
+
 //player.setMesh(carGeo,carMat);
 (function(){
     var light = new THREE.DirectionalLight(sun,1);
@@ -211,6 +244,7 @@ function rotate(x,y,r){
     var p={x:x*cos-y*sin,y:x*sin+y*cos};
     return p;
 }
+/*
 for(var i=0;i<cp.length;i++){
 
     var geometry = new THREE.CubeGeometry(1, 5, 1);
@@ -221,7 +255,7 @@ for(var i=0;i<cp.length;i++){
     mesh.position.z=cp[i].z;
     scene.add( mesh );
 
-}
+}*/
 var creatingcar=false;
 var timenow=new Date().getTime();
 console.log(player.pos);
@@ -320,11 +354,14 @@ function timer(){
     }
     if(player.mesh!=null){
         camera.position.x=player.mesh.position.x-Math.sin(player.rot)*12;
-        camera.position.y=3;
+        camera.position.y=5;
         camera.position.z=player.mesh.position.z-Math.cos(player.rot)*12;
         //camera.rotation.x=Math.PI/4;
+        arrow.position.set(player.mesh.position.x,4,player.mesh.position.z);
+        arrow.rotation.y=-Math.atan2(cp[player.cp].x-player.pos.x,cp[player.cp].z-player.pos.z);
         var p={x:player.mesh.position.x,y:3,z:player.mesh.position.z};
         camera.lookAt(p);
+        //p.rotation.y+=handle*0.1;
     }
     //alert(camera.rotation.x+","+camera.rotation.y+","+camera.rotation.z);
     //camera.rotation.y=0;

@@ -70,7 +70,7 @@ var Car=function(){
             var obj = ray.intersectObjects(targetList);
             if (obj.length > 0) {
                 var d=obj[0].distance;
-                if(d<0.5+dpdt){
+                if(d<0.5||(d<0.5+dpdt&&i==0)){
                     if(timenow-this.collidedTime<100){
                     this.vel.x=-rv.x*v;
                     this.vel.z=-rv.y*v;
