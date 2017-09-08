@@ -83,12 +83,6 @@ function ui(){
     }else{
         ordertxt=(order+1)+"th";
     }
-    if(lap.innerHTML!==laptxt){
-        lap.innerHTML=laptxt;
-    }
-    if(orderdiv.innerHTML!==ordertxt){
-        orderdiv.innerHTML=ordertxt;
-    }
     if(player.goal!=null||state=="result"){
         var contentArr1=[];
         resultTable.style.visibility="visible";
@@ -143,6 +137,7 @@ function ui(){
                 return -1;
             }
         });
+        var myorder=0;
         for(var i=0;i<sorted.length;i++){
             var name="player "+sorted[i].cid;
             var content=sorted[i].goal;
@@ -150,7 +145,19 @@ function ui(){
                 var t=sorted[i].goal*0.001;
                 content=Math.floor(t/60)+"分"+(Math.floor(t)%60)+"秒"+(Math.floor(t*1000)%1000);
             }
-            if(sorted[i].cid==player.cid)name="YOU";
+            if(sorted[i].cid==player.cid){
+                name="YOU";
+                myorder=i;
+                if(myorder==0){
+                    ordertxt="1st";
+                }else if(myorder==1){
+                    ordertxt="2nd";
+                }else if(myorder==2){
+                    ordertxt="3rd";
+                }else{
+                    ordertxt=(myorder+1)+"th";
+                }
+            }
             contentArr1.push([name,content]);
             //contentArr1.push(["test"+i,"aaa"]);
         }
@@ -164,6 +171,12 @@ function ui(){
         tabletxt1=tabletxt;
     }else{
         resultTable.style.visibility="hidden";
+    }
+    if(lap.innerHTML!==laptxt){
+        lap.innerHTML=laptxt;
+    }
+    if(orderdiv.innerHTML!==ordertxt){
+        orderdiv.innerHTML=ordertxt;
     }
     laptxt="";
 }
