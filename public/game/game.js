@@ -285,6 +285,7 @@ function timer(){
             lag=new Date().getTime()- senttime;
             sent=false; 
             if(res=="nocar"){
+                if(rawstate=="result")rawstate="wait";
                 if(creatingcar)return;
                 creatingcar=true;
                 return;
@@ -311,7 +312,7 @@ function timer(){
         });
         sent=true;
     }
-    if(timenow>next&&rawstate!=="result"){
+    if(timenow>next&&(rawstate!=="result")){
         location.reload();
         return;
     }else if(timenow>end){
