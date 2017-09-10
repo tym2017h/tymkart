@@ -69,7 +69,7 @@ function ui(){
     if(state=="result"||player.goal){
         if(dialogdiv.style.visibility!="visible")
             dialogdiv.style.visibility="visible";
-        var ds="次のレースは"+ Math.floor((next- timenow+lag)*0.001)+"秒後です";
+        var ds="次のレースは"+ Math.floor((next- neutralTime)*0.001)+"秒後です";
         if(dialogdiv.innerHTML!=ds)
             dialogdiv.innerHTML=ds;
     }else if(player.audience){
@@ -91,9 +91,9 @@ function ui(){
     if(state=="wait"){
         if(count.style.visibility!="visible")
             count.style.visibility="visible";
-        count.innerHTML="スタートまで"+Math.floor((start- timenow+lag)*0.001)+"秒";
+        count.innerHTML="スタートまで"+Math.floor((start- neutralTime)*0.001)+"秒";
     }else if(state=="result"){
-        laptxt+="次のレースは"+ Math.floor((next- timenow+lag)*0.001)+"秒後です";
+        laptxt+="次のレースは"+ Math.floor((next- neutralTime)*0.001)+"秒後です";
     }else if(state=="race"){
         //laptxt+="レースは"+ Math.floor((end- timenow+lag)*0.001)+"秒後に強制的に終了します";
         laptxt+=player.lap+"周目";

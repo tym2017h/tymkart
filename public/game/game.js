@@ -215,7 +215,7 @@ function updatecars(cs){
                 othercar[j].acc=cs[i].acc;
                 othercar[j].goal=cs[i].goal;
                 othercar[j].audience=cs[i].audience;
-                othercar[j].physics(lag*0.001);
+                //othercar[j].physics(lag*0.001);
                 exists=true;
             }
         }
@@ -383,7 +383,7 @@ function timer(){
 
     //camera.rotation.y=player.rot;
     if(player.lap>LAP_ENDS&&player.goal==null){
-        player.goal=timenow-start;
+        player.goal=neutralTime-start;
     }
     renderer.render( scene, camera );  
     ui();
