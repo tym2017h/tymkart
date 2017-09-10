@@ -292,7 +292,7 @@ function timer(){
             var p=JSON.parse(res);
             updatecars(p.cars);
             //console.log(res);
-            console.log(p);
+            console.log(p.state);
             state=p.state;
             rawstate=p.state;
             start=p.start;
