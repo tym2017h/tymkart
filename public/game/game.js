@@ -270,7 +270,7 @@ function timer(){
     }
     timenow=new Date().getTime();
     //console.log(JSON.stringify(player.pos)+","+timenow);
-    if(player.cid!=null&&!sent){
+    if(!sent){
         var d={};
         d.pos=player.pos;
         d.vel=player.vel;
@@ -311,7 +311,7 @@ function timer(){
         });
         sent=true;
     }
-    if(timenow>next&&rawstate=="wait"){
+    if(timenow>next&&rawstate!=="result"){
         location.reload();
         return;
     }else if(timenow>end){

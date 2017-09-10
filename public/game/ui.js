@@ -96,6 +96,7 @@ function ui(){
         //laptxt+="レースは"+ Math.floor((end- timenow+lag)*0.001)+"秒後に強制的に終了します";
         laptxt+=player.lap+"周目";
     }
+    laptxt+="state:"+state+"rawstate:"+rawstate;
     //laptxt+=player.cp+"lap:"+player.lap+"order:";
 
     var ordertxt="";
