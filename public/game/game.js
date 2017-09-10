@@ -51,7 +51,7 @@ var arrow;
     geom.vertices.push(v1);
     geom.vertices.push(v2);
     geom.vertices.push(v3);
-    
+
     geom.vertices.push(new THREE.Vector3(-0.25,0,2));
     geom.vertices.push(new THREE.Vector3(0.25,0,0));
     geom.vertices.push(new THREE.Vector3(-0.25,0,0));
@@ -62,11 +62,11 @@ var arrow;
     geom.faces.push( new THREE.Face3( 0, 1, 2 ) );
     geom.faces.push( new THREE.Face3( 3, 4, 5 ) );
     geom.faces.push( new THREE.Face3( 6, 7, 8 ) );
-    
+
     geom.faces.push( new THREE.Face3( 2, 1, 0 ) );
     geom.faces.push( new THREE.Face3( 5, 4, 3 ) );
     geom.faces.push( new THREE.Face3( 8, 7, 6 ) );
-    
+
     //geom=new THREE.CubeGeometry(,1,1);
     arrow = new THREE.Mesh( geom, new THREE.MeshBasicMaterial({color:0xffff00,transparent:true,opacity:0.5}) );
     scene.add(arrow);
@@ -259,6 +259,7 @@ for(var i=0;i<cp.length;i++){
 var creatingcar=false;
 var timenow=new Date().getTime();
 console.log(player.pos);
+var firststate=null;
 function timer(){
     if(loadstats>0){
         requestAnimationFrame(timer);
@@ -296,11 +297,17 @@ function timer(){
             gameid=p.gameid;
             timedifflag=p.time-senttime;
             timediff=timedifflag-lag/2;
+            if(firststate==null){
+                firststate=state;
+                if(state!="wait"){
+                    player.audience=true;
+                }
+            }
             netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff;
         });
         sent=true;
     }
-    if(timenow>next){
+    if(timenow>next&&state=="wait"){
         location.reload();
         return;
     }else if(timenow>end){
@@ -341,16 +348,17 @@ function timer(){
             othercar[i].reset();
         }
         othercar[i].updateMesh();
-        if(othercar[i].goal!=null&&player.goal==null){
+        if(othercar[i].audience){
+            
+        }else if(othercar[i].goal!=null&&player.goal==null){
             order++;
-        }else
-            if(othercar[i].lap>player.lap){
-                order++;
-            }else if(othercar[i].cp>player.cp){
-                order++;
-            }else if(othercar[i].cp==player.cp&&othercar[i].dsq<player.dsq){
-                order++;
-            }
+        }else if(othercar[i].lap>player.lap){
+            order++;
+        }else if(othercar[i].cp>player.cp){
+            order++;
+        }else if(othercar[i].cp==player.cp&&othercar[i].dsq<player.dsq){
+            order++;
+        }
     }
     if(player.mesh!=null){
         camera.position.x=player.mesh.position.x-Math.sin(player.rot)*12;
@@ -375,7 +383,17 @@ function timer(){
     ui();
     lasttime=timenow;
     requestAnimationFrame(timer);
-}timer();
+}
+check();
+function check()
+{
+    loadstats=0;
+    if(loadstats<=0){
+        timer();
+    }else{
+        setTimeout(check,100);
+    }
+}
 function addcube(x,y,z){
     var geometry = new THREE.CubeGeometry(2, 2, 2);
     var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );

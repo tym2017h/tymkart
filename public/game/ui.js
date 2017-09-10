@@ -39,6 +39,18 @@ netdiv.style.width="200px";
 netdiv.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,130,0.7),rgba(0,0,130,0.5))";
 document.body.appendChild(netdiv);
 
+
+var dialogdiv=document.createElement("div");
+dialogdiv.style.position="absolute";
+dialogdiv.style.zIndex="1";
+dialogdiv.style.color="white";
+dialogdiv.style.top= 100+"px";
+dialogdiv.style.height="80px";
+dialogdiv.style.width=window.innerWidth+"px";
+dialogdiv.style.fontSize="50px"
+dialogdiv.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,130,0.7),rgba(0,0,130,0.5))";
+document.body.appendChild(dialogdiv);
+
 var resultTable=document.createElement("table");
 resultTable.style.position="absolute";
 resultTable.style.zIndex="1";
@@ -52,11 +64,24 @@ resultTable.appendChild(tbody);
 document.body.appendChild(resultTable);
 var tabletxt1="";
 function ui(){
-    netdiv.innerHTML="";
-    for(var i=0;i<othercar.length;i++){
-        netdiv.innerHTML+=othercar[i].goal+"<br>";
-    }
     var laptxt=state+" ";
+
+    if(state=="result"||player.goal){
+        if(dialogdiv.style.visibility!="visible")
+            dialogdiv.style.visibility="visible";
+        var ds="次のレースは"+ Math.floor((next- timenow+lag)*0.001)+"秒後です";
+        if(dialogdiv.innerHTML!=ds)
+            dialogdiv.innerHTML=ds;
+    }else if(player.audience){
+        if(dialogdiv.style.visibility!="visible")
+            dialogdiv.style.visibility="visible";
+        var ds="あなたは途中参加しました";
+        if(dialogdiv.innerHTML!=ds)
+            dialogdiv.innerHTML=ds;
+    }else{
+        if(dialogdiv.style.visibility!="hidden")
+            dialogdiv.style.visibility="hidden";
+    }
     if(state!=="wait"){
         if(count.style.visibility!="hidden")
             count.style.visibility="hidden";
