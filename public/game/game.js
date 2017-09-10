@@ -261,7 +261,6 @@ var creatingcar=false;
 var timenow=new Date().getTime();
 console.log(player.pos);
 var firststate=null;
-
 var rawstate=state;
 function timer(){
     if(loadstats>0){
@@ -269,6 +268,8 @@ function timer(){
         return;
     }
     timenow=new Date().getTime();
+    neutralTime=timenow+timediff;
+    var dt=timenow-lasttime;
     //console.log(JSON.stringify(player.pos)+","+timenow);
     if(!sent){
         var d={};
@@ -301,7 +302,8 @@ function timer(){
             next=p.next;
             gameid=p.gameid;
             timedifflag=p.time-senttime;
-            timediff=timedifflag-lag/2;
+            //timediff=timedifflag-lag/2;
+            timediff=p.time+lag/2-time;//timediff+time=servertime
             if(firststate==null){
                 firststate=state;
                 if(state!="wait"){
@@ -312,18 +314,17 @@ function timer(){
         });
         sent=true;
     }
-    if(timenow>next&&(rawstate!=="result")){
+    if(neutralTime>next&&(rawstate!=="result")){
         location.reload();
         return;
-    }else if(timenow>end){
+    }else if(neutralTime>end){
         state="result";
-    }else if(timenow>start){
+    }else if(neutralTime>start){
         state="race";
     }else {
         state="wait";
     }
-    neutralTime=timenow-timediff;
-    var dt=timenow-lasttime;
+    //neutralTime=timenow-timediff;
     dt*=0.001;
     handle=tilt;
     //lap.innerHTML=player.lap;
