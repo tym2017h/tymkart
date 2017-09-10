@@ -65,7 +65,7 @@ document.body.appendChild(resultTable);
 var tabletxt1="";
 function ui(){
     var laptxt=state+" ";
-
+    
     if(state=="result"||player.goal){
         if(dialogdiv.style.visibility!="visible")
             dialogdiv.style.visibility="visible";
@@ -73,6 +73,8 @@ function ui(){
         if(dialogdiv.innerHTML!=ds)
             dialogdiv.innerHTML=ds;
     }else if(player.audience){
+        if(orderdiv.style.visibility!="hidden")
+            orderdiv.style.visibility="hidden";
         if(dialogdiv.style.visibility!="visible")
             dialogdiv.style.visibility="visible";
         var ds="あなたは途中参加しました";
