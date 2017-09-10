@@ -303,7 +303,7 @@ function timer(){
             gameid=p.gameid;
             timedifflag=p.time-senttime;
             //timediff=timedifflag-lag/2;
-            timediff=p.time+lag/2-time;//timediff+time=servertime
+            timediff=p.time+lag/2-new Date().getTime();//timediff+time=servertime
             if(firststate==null){
                 firststate=state;
                 if(state!="wait"){
