@@ -194,6 +194,7 @@ doget(null,"/newcar",function(e){
     var d=JSON.parse(e);
     player.cid=d.cid;
     state=d.state;
+    rawstate=d.state;
     start=d.start;
     end=d.end;
     next=d.next;
@@ -260,6 +261,8 @@ var creatingcar=false;
 var timenow=new Date().getTime();
 console.log(player.pos);
 var firststate=null;
+
+var rawstate=state;
 function timer(){
     if(loadstats>0){
         requestAnimationFrame(timer);
@@ -291,6 +294,7 @@ function timer(){
             //console.log(res);
             console.log(p);
             state=p.state;
+            rawstate=p.state;
             start=p.start;
             end=p.end;
             next=p.next;
@@ -307,7 +311,7 @@ function timer(){
         });
         sent=true;
     }
-    if(timenow>next&&state=="wait"){
+    if(timenow>next&&rawstate=="wait"){
         location.reload();
         return;
     }else if(timenow>end){
