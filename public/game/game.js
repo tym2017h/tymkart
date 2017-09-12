@@ -316,6 +316,7 @@ function timer(){
     }
     if(neutralTime>next&&(rawstate!=="result")){
         location.reload();
+        loadstats=1;
         return;
     }else if(neutralTime>end){
         state="result";
