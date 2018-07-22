@@ -20,6 +20,7 @@ window.onkeydown = function (ev) {
 window.onkeyup = function (ev) {
     keysPress[ev.keyCode] = false;
 }
+
 window.addEventListener('touchstart', function (e) {
     if(e.touches){
         tilt=0;
@@ -43,7 +44,7 @@ window.addEventListener('touchmove', function (e) {
         }
     }
     e.preventDefault();
-} false);
+} ,false);
 window.addEventListener('touchcancel', function (e) {
     if(e.touches){
         tilt=0;
