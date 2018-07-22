@@ -71,10 +71,11 @@ leftButton.style.width=(window.innerWidth*0.3)+"px";
 
 leftButton.style.background="linear-gradient(to right, rgba(50,50,50,0.5),rgba(50,50,50,0.7),rgba(50,50,50,0.5))";
 document.body.appendChild(leftButton);
-var leftImg=document.createElement("img");
-leftImg.src="textures/left.png";
+var leftImg=document.createElement("div");
+leftImg.style.backgroundImage="url('textures/left.png')";
 leftImg.style.width="100%";
 leftImg.style.height="100%";
+leftImg.style.backgroundSize="cover";
 leftButton.appendChild(leftImg);
 
 var rightButton=document.createElement("div");
@@ -88,10 +89,11 @@ rightButton.style.width=(window.innerWidth*0.3)+"px";
 
 rightButton.style.background="linear-gradient(to right, rgba(50,50,50,0.5),rgba(50,50,50,0.7),rgba(50,50,50,0.5))";
 document.body.appendChild(rightButton);
-var rightImg=document.createElement("img");
-rightImg.src="textures/right.png";
+var rightImg=document.createElement("div");
+rightImg.style.backgroundImage="url('textures/right.png')";
 rightImg.style.width="100%";
 rightImg.style.height="100%";
+rightImg.style.backgroundSize="cover";
 rightButton.appendChild(rightImg);
 
 
