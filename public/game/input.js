@@ -25,10 +25,10 @@ window.addEventListener('touchstart', function (e) {
     if(e.touches){
         tilt=0;
         if(e.touches[0].pageX<window.innerWidth*0.3){
-            tilt=-1;
+            tilt=1;
         }
         else if(e.touches[0].pageX>window.innerWidth*0.7){
-            tilt=1;
+            tilt=-1;
         }
     }
     e.preventDefault();
@@ -37,10 +37,10 @@ window.addEventListener('touchmove', function (e) {
     if(e.touches){
         tilt=0;
         if(e.touches[0].pageX<window.innerWidth*0.3){
-            tilt=-1;
+            tilt=1;
         }
         else if(e.touches[0].pageX>window.innerWidth*0.7){
-            tilt=1;
+            tilt=-1;
         }
     }
     e.preventDefault();
