@@ -58,6 +58,43 @@ resultTable.style.color="white";
 resultTable.style.top= (window.innerHeight/2)+"px";
 resultTable.style.left= window.innerWidth/2+"px";
 resultTable.style.fontSize="30px";
+
+//button
+var leftButton=document.createElement("div");
+leftButton.style.position="absolute";
+leftButton.style.zIndex="1";
+leftButton.style.color="white";
+leftButton.style.top= (window.innerHeight-80-(window.innerWidth*0.3))+"px";
+
+leftButton.style.height=(window.innerWidth*0.3)+"px";
+leftButton.style.width=(window.innerWidth*0.3)+"px";
+
+leftButton.style.background="linear-gradient(to right, rgba(50,50,50,0.5),rgba(50,50,50,0.7),rgba(50,50,50,0.5))";
+document.body.appendChild(leftButton);
+var leftImg=document.createElement("img");
+leftImg.src="textures/left.png";
+leftImg.style.width="100%";
+leftImg.style.height="100%";
+leftButton.appendChild(leftImg);
+
+var rightButton=document.createElement("div");
+rightButton.style.position="absolute";
+rightButton.style.zIndex="1";
+rightButton.style.color="white";
+rightButton.style.top= (window.innerHeight-80-(window.innerWidth*0.3))+"px";
+rightButton.style.left=(window.innerWidth*0.7)+"px";
+rightButton.style.height=(window.innerWidth*0.3)+"px";
+rightButton.style.width=(window.innerWidth*0.3)+"px";
+
+rightButton.style.background="linear-gradient(to right, rgba(50,50,50,0.5),rgba(50,50,50,0.7),rgba(50,50,50,0.5))";
+document.body.appendChild(rightButton);
+var rightImg=document.createElement("img");
+rightImg.src="textures/right.png";
+rightImg.style.width="100%";
+rightImg.style.height="100%";
+rightButton.appendChild(rightImg);
+
+
 //resultTable.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,130,0.7),rgba(0,0,130,0.5))";
 var tbody=document.createElement("tbody");
 resultTable.appendChild(tbody);

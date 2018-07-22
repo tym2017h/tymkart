@@ -24,11 +24,13 @@ window.onkeyup = function (ev) {
 window.addEventListener('touchstart', function (e) {
     if(e.touches){
         tilt=0;
-        if(e.touches[0].pageX<window.innerWidth*0.3){
-            tilt=1;
-        }
-        else if(e.touches[0].pageX>window.innerWidth*0.7){
-            tilt=-1;
+        if(e.touches[0].pageY>window.innerHeight-window.innerWidth*0.3-80){
+            if(e.touches[0].pageX<window.innerWidth*0.3){
+                tilt=1;
+            }
+            else if(e.touches[0].pageX>window.innerWidth*0.7){
+                tilt=-1;
+            }
         }
     }
     e.preventDefault();
@@ -36,11 +38,13 @@ window.addEventListener('touchstart', function (e) {
 window.addEventListener('touchmove', function (e) {
     if(e.touches){
         tilt=0;
-        if(e.touches[0].pageX<window.innerWidth*0.3){
-            tilt=1;
-        }
-        else if(e.touches[0].pageX>window.innerWidth*0.7){
-            tilt=-1;
+        if(e.touches[0].pageY>window.innerHeight-window.innerWidth*0.3-80){
+            if(e.touches[0].pageX<window.innerWidth*0.3){
+                tilt=1;
+            }
+            else if(e.touches[0].pageX>window.innerWidth*0.7){
+                tilt=-1;
+            }
         }
     }
     e.preventDefault();
