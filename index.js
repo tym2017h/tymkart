@@ -18,6 +18,8 @@ var car=function(){
     cidgen++;
 };
 var cars=[];
+var lastConnection=0;
+
 //     start     end       next
 //wait       race    result     wait
 var state="wait";
@@ -44,9 +46,10 @@ function waitState(){
 //next<time
 function switchState(){
     cars=[];
+    var time=new Date().getTime();
     gameid++;
     cidgen=0;
-    start=next+WAIT_DURATION;
+    start=time+WAIT_DURATION;
     end=start+RACE_DURATION;
     next=end+RESULT_DURATION;
     state="wait";
@@ -64,6 +67,8 @@ app.get('/newcar', function (request, response) {
          state:state,start:start,end:end,next:next,audience:c.audience,gameid:gameid}));
 });
 app.get('/carlist', function (request, response) {
+    var time=new Date().getTime();
+    lastConnection=time;
     response.send(JSON.stringify(cars));
 });
 app.get('/a', function (request, response) {
@@ -78,6 +83,7 @@ function getcarindex(cid){
 app.post('/setpos', function (request, response) {
     console.log(request.body);
     var time=new Date().getTime();
+    lastConnection=time;
     if(time>next){
         switchState();
     } else if(time>end){
