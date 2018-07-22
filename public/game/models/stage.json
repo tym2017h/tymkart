@@ -2133,19 +2133,19 @@
     "images":[
         {
             "uuid": "tileimg",          
-            "url": "tile.png"          
+            "url": "tile.jpeg"          
         },
         {
             "uuid": "windowimg",          
-            "url": "window.png"          
+            "url": "window.jpeg"          
         },
         {
             "uuid": "conimg",          
-            "url": "concrete.png"          
+            "url": "concrete.jpeg"          
         },
         {
             "uuid": "grassimg",          
-            "url": "grass.png"          
+            "url": "grass.jpeg"          
         },
         {
             "uuid": "sandimg",          
@@ -2157,7 +2157,7 @@
         },
         {
             "uuid": "tennisimg",          
-            "url": "tennis.png"          
+            "url": "tennis.jpeg"          
         }
     ],
 
