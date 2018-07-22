@@ -394,7 +394,7 @@ function timer(){
 check();
 function check()
 {
-    loadstats=0;
+    //loadstats=0;
     if(loadstats<=0){
         timer();
     }else{
