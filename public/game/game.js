@@ -36,7 +36,7 @@ var cp=[
     {x:-16,z:-22},//4 5.6
     {x:0,z:0}
 ];
-
+var itemBox = [];
 var carGeo = new THREE.CubeGeometry(1, 1, 1);
 var carMatA = new THREE.MeshLambertMaterial( { color: 0xffffff,transparent:true,opacity:0.5} );
 var carMat = new THREE.MeshLambertMaterial( { color: 0xffffff} );
@@ -87,94 +87,6 @@ var arrow;
 })();
 var l2 = new THREE.AmbientLight(ambient);
 scene.add( l2 );
-var loadstats=0;
-loadstats++;
-(function(){
-    var loader = new THREE.ObjectLoader();
-    loader.load("models/stage.json",function ( obj ) {
-        loadstats--;
-        //obj.position.set(10,0,30);
-        //obj.rotation.y=Math.PI/4*5;
-        obj.scale.set(4,4,4);
-        for(var i=0;i<=6;i++){
-            setchildcollision(obj,"wall"+i);
-        }
-        scene.add( obj );
-        console.log(targetList);
-    });
-})();
-function setchildcollision(obj,name){
-    var mesh=obj.getChildByName(name,true);
-    console.log(mesh);
-    targetList.push(mesh);
-}
-var carobj;
-loadstats++;
-
-(function(){
-    var loader = new THREE.ObjectLoader();
-    loader.load("models/car.json",function ( obj ) {
-        loadstats--;
-        //obj.position.set(10,0,30);
-        //obj.rotation.y=Math.PI/4*5;
-        obj.scale.set(0.5,0.5,0.5);
-        carobj=obj;
-        var obj1=obj.GdeepCloneMaterials();
-        scene.add(obj1);
-        player.setObj(obj1);
-        /*
-        for(var i in obj1.children){
-            console.log(i.name);
-        }
-        */
-        //console.log(obj1.getChildByName("Cube_Cube.001",true));
-        var n=10;
-        if(othercar.length>n)n=othercar.length;
-        for(var i=0;i<n;i++){
-            var obj2=carobj.GdeepCloneMaterials();
-            obj2.position.set(i+10,0,0);
-            scene.add(obj2);
-            if(i<othercar.length&&(!othercar[i].mesh)){
-                othercar[i].setObj(obj2);
-            }
-        }
-        console.log(obj1.children);
-        /*
-        for(var i=0;i<othercar.length;i++){
-            var obj2=carobj.GdeepCloneMaterials();
-            scene.add(obj2);
-            othercar[i].setObj(obj2);
-        }*/
-        //player.setObj(obj);
-    });
-})();
-/** Gives the aptitude for an object3D to clone recursively with its material cloned (normal clone does not clone material)*/
-
-THREE.Object3D.prototype.GdeepCloneMaterials = function() {
-    var object = this.clone( new THREE.Object3D(), false );
-
-    for ( var i = 0; i < this.children.length; i++ ) {
-
-        var child = this.children[ i ];
-        if ( child.GdeepCloneMaterials ) {
-            object.add( child.GdeepCloneMaterials() );
-        } else {
-            object.add( child.clone() );
-        }
-
-    }
-    return object;
-};
-
-THREE.Mesh.prototype.GdeepCloneMaterials = function( object, recursive ) {
-    if ( object === undefined ) {
-        object = new THREE.Mesh( this.geometry, this.material.clone() );
-    }
-
-    THREE.Object3D.prototype.GdeepCloneMaterials.call( this, object, recursive );
-
-    return object;
-};
 //network
 var clientstart=null;
 
@@ -311,10 +223,14 @@ function timer(){
                     player.audience=true;
                 }
             }
-            netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff;
+            netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
+                "<br>pos:"+Math.floor(player.pos.x)+","
+            +Math.floor(player.pos.z);
         });
         sent=true;
     }
+            
+    //netdiv.innerHTML=            "<br>pos:"+Math.floor(player.pos.x)+","            +Math.floor(player.pos.z);
     if(neutralTime>next&&(rawstate!=="result")){
         location.reload();
         loadstats=1;
@@ -357,7 +273,7 @@ function timer(){
         }
         othercar[i].updateMesh();
         if(othercar[i].audience){
-            
+            order++;
         }else if(othercar[i].goal!=null&&player.goal==null){
             order++;
         }else if(othercar[i].lap>player.lap){
@@ -387,20 +303,41 @@ function timer(){
     if(player.lap>LAP_ENDS&&player.goal==null){
         player.goal=neutralTime-start;
     }
+    //console.log(scene);
+    //console.log(camera);
+    try{
     renderer.render( scene, camera );  
+    }catch(e){
+        //console.log(e)
+    }
     ui();
     lasttime=timenow;
     requestAnimationFrame(timer);
 }
 check();
+function init(){
+    additemBox(0,0.6,450);
+    additemBox(0,0.6,80);
+}
 function check()
 {
     //loadstats=0;
     if(loadstats<=0){
+        init();
         timer();
     }else{
         setTimeout(check,100);
     }
+}
+function additemBox(x,y,z){
+    var geometry = new THREE.CubeGeometry(2, 2,2);
+    var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
+    var mesh = new THREE.Mesh( geometry, material );
+    itemBox.push({x:x,z:z});
+    mesh.position.x=x;
+    mesh.position.y=y;
+    mesh.position.z=z;
+    scene.add( mesh );
 }
 function addcube(x,y,z){
     var geometry = new THREE.CubeGeometry(2, 2, 2);
