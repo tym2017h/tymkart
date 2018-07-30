@@ -1,5 +1,41 @@
 var stages=[
-    {path:"jsonmodel/tym2.json"}
+    {
+        path:"jsonmodel/tym2.json",
+     cp:[
+    {x:0,z:0},
+    {x:0,z:280},
+    {x:-80,z:384},
+    {x:0,z:448},
+    {x:248,z:434},//-62 -108
+    {x:320,z:364},
+    {x:226,z:260},//-56.5 -57.5
+    {x:220,z:36},
+    {x:184,z:-32},
+    {x:40,z:-36},
+    {x:-52,z:-84},//13 21
+    {x:-92,z:-40},//23 10
+    {x:-60,z:-8},//15 2
+    {x:-16,z:-22},//4 5.6
+    {x:0,z:0}
+]},{
+        path:"tyminside/tym3.json",
+     cp:[
+    {x:0,z:0},
+    {x:0,z:280},
+    {x:-80,z:384},
+    {x:0,z:448},
+    {x:248,z:434},//-62 -108
+    {x:320,z:364},
+    {x:226,z:260},//-56.5 -57.5
+    {x:220,z:36},
+    {x:184,z:-32},
+    {x:40,z:-36},
+    {x:-52,z:-84},//13 21
+    {x:-92,z:-40},//23 10
+    {x:-60,z:-8},//15 2
+    {x:-16,z:-22},//4 5.6
+    {x:0,z:0}
+]}
 ];
 var stageId=0;
 var loadstats=0;
@@ -80,8 +116,10 @@ dogetWithError("","/stage",function(res){
     LoadStage(); 
 });
 var LoadStage=(function(){
+    console.log(stages[stageId].cp);
+    cp=stages[stageId].cp;
     var loader = new THREE.ObjectLoader();
-    loader.load("jsonmodel/tym2.json",function ( obj ) {
+    loader.load(stages[stageId].path,function ( obj ) {
         obj.scale.set(4,4,4);
         console.log(obj);
         for(var i=0;i<=obj.children.length;i++){
