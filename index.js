@@ -70,7 +70,7 @@ app.get('/newcar', function (request, response) {
 app.get('/stage', function (request, response) {
     var time=new Date().getTime();
     lastConnection=time;
-    response.send(stage);
+    response.send(stage+"");
 });
 app.get('/carlist', function (request, response) {
     var time=new Date().getTime();
