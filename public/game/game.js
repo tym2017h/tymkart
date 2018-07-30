@@ -1,6 +1,9 @@
 var width = window.innerWidth;
 var height = window.innerHeight;
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true
+});
 renderer.setSize(width, height);
 renderer.setClearColor(0xbbccff);
 renderer.domElement.style.position = "absolute";
@@ -8,6 +11,7 @@ renderer.domElement.style.zIndex = "0";
 document.body.appendChild(renderer.domElement);
 var order=0;
 var targetList=[];
+var boostList=[];
 var projector = new THREE.Projector();
 var ambient=0x444477;
 var sun=0xbbbb88;

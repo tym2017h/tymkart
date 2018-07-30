@@ -19,7 +19,7 @@ var car=function(){
 };
 var cars=[];
 var lastConnection=0;
-
+var stage=0;
 //     start     end       next
 //wait       race    result     wait
 var state="wait";
@@ -46,6 +46,7 @@ function waitState(){
 //next<time
 function switchState(){
     cars=[];
+    stage=Math.floor(Math.random()*100);
     var time=new Date().getTime();
     gameid++;
     cidgen=0;
@@ -65,6 +66,11 @@ app.get('/newcar', function (request, response) {
     response.send(JSON.stringify(
         {cid:c.cid,
          state:state,start:start,end:end,next:next,audience:c.audience,gameid:gameid}));
+});
+app.get('/stage', function (request, response) {
+    var time=new Date().getTime();
+    lastConnection=time;
+    response.send(stage);
 });
 app.get('/carlist', function (request, response) {
     var time=new Date().getTime();

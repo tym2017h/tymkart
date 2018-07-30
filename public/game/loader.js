@@ -1,56 +1,116 @@
 var stages=[
-    {path:"models/stage0.obj",wallCount:"6"}
+    {path:"jsonmodel/tym2.json"}
 ];
-
+var stageId=0;
 var loadstats=0;
 loadstats++;
+/*
 (function(){
     var mtlLoader = new THREE.MTLLoader();
-    mtlLoader.setPath("/obj/")
+    mtlLoader.setPath("obj/")
     mtlLoader.load( "tym2.mtl", function( materials ) {
 
         materials.preload();
+            console.log(materials.materials);
+        for(var i=0;i<materials.materials.length;i++){
+            materials.materials[i].alphaTest=0.5;
+            materials.materials[i].depthTest = false;
+
+            console.log(materials.materials[i]);
+        }
         var loader = new THREE.OBJLoader();
         loader.setMaterials(materials);
         loader.setPath("obj/");
         loader.load("tym2.obj",function ( obj ) {
-            //obj.position.set(10,0,30);
-            //obj.rotation.y=Math.PI/4*5;
             obj.scale.set(4,4,4);
-            /*
-            for(var i=0;i<=6;i++){
-                if(i==0){
-                setchildcollision(obj,"wall");
-                }else{
-                setchildcollision(obj,"wall.00"+i);
-                    
-                }
-            }*/
             console.log(obj);
             for(var i=0;i<=obj.children.length;i++){
                 var w="wall";
                 try{
-                var str=obj.children[i].name.slice(0,w.length);
+                    obj.children[i].needsUpdate=obj.children[i].needsUpdate;
+                }catch(e){
+                    //obj.children.splice(i, 1);
+                }
+
+                try{
+                    //console.log(obj.children[i].material);
+                    //if(obj.children[i].material.Tp){
+                    console.log(obj.children[i].material);
+                    if(obj.children[i].material.transparent){
+                        var tpm=new THREE.MeshLambertMaterial({color:0xffff00});
+                        console.log(obj.children[i].material);
+                        obj.children[i].material=tpm;
+                    }
+                }catch(e){
+                }
+                var str;
+                try{
+                str=obj.children[i].name.slice(0,w.length);
                 }catch(e){
                     continue;
                 }
                 if(str==w){
                     targetList.push(obj.children[i]);
                 }
-                /*
-                if(i==0){
-                setchildcollision(obj,"wall");
-                }else{
-                setchildcollision(obj,"wall.00"+i);
-                    
-                }*/
+                var w1="boost";
+                try{
+                str=obj.children[i].name.slice(0,w1.length);
+                }catch(e){
+                    continue;
+                }
+                if(str==w1){
+                    boostList.push(obj.children[i]);
+                }
             }
+
             scene.add( obj );
             loadstats--;
             console.log(targetList);
+            console.log(boostList);
         });
     });
-})();
+})();*/
+dogetWithError("","/stage",function(res){
+    console.log(res);
+    stageId=parseInt(res)%stages.length;
+    LoadStage(); 
+},function(){
+    stageId=Math.floor(Math.random()*100)%stages.length;
+    console.log(stageId);
+    LoadStage(); 
+});
+var LoadStage=(function(){
+    var loader = new THREE.ObjectLoader();
+    loader.load("jsonmodel/tym2.json",function ( obj ) {
+        obj.scale.set(4,4,4);
+        console.log(obj);
+        for(var i=0;i<=obj.children.length;i++){
+            var w="wall";
+            var str;
+            try{
+                str=obj.children[i].name.slice(0,w.length);
+            }catch(e){
+                continue;
+            }
+            if(str==w){
+                targetList.push(obj.children[i]);
+            }
+            var w1="boost";
+            try{
+                str=obj.children[i].name.slice(0,w1.length);
+            }catch(e){
+                continue;
+            }
+            if(str==w1){
+                boostList.push(obj.children[i]);
+            }
+        }
+        scene.add( obj );
+        loadstats--;
+        console.log(targetList);
+        console.log(boostList);
+    });
+});
 /*
 (function(){
     var loader = new THREE.ObjectLoader();

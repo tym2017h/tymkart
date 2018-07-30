@@ -16,12 +16,15 @@ var Car=function(){
     }
     this.cid=null;
     this.pos={x:0,z:-20};
+    this.lastpos={x:0,z:-20};
     this.vel={x:0,z:0};
     this.rot=0;//radian
     this.fric=10;
     this.drag=1;
     this.acc=0;
     this.power=5;
+    this.boostedSpeed=50;
+    this.boost=0;
     this.terminalVelocity=30;
     this.reset=function(){
         this.pos={x:Math.floor(this.cid%5),z:Math.floor(this.cid/5)};
@@ -50,19 +53,31 @@ var Car=function(){
             this.vel.z+=this.vel.z*drag*dt;
             return;*/
         }
-        this.vel.x+=dt*a.x*this.power;
-        this.vel.z+=dt*a.y*this.power;
-        var v1=rotate(this.vel.x,this.vel.z,-this.rot);
-        var relativeSideForce=v1.x;
-        var sideforce=rotate(v1.x,0,this.rot);
-        this.vel.x-=sideforce.x*dt*this.fric;
-        this.vel.z-=sideforce.y*dt*this.fric;
-        this.vel.x+=this.vel.x*drag*dt;
-        this.vel.z+=this.vel.z*drag*dt;
+        //collision
+        netdiv.innerHTML=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
         var res=8;
         var collided=false;
         var mg=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
         var dpdt=mg*dt;
+        {
+            var rv=rotate(this.vel.x/v,this.vel.z/v,0);
+            var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,0,this.pos.z), new THREE.Vector3(-rv.x, 0, rv.y).normalize());
+            
+            var obj = ray.intersectObjects(targetList);
+            if (obj.length > 0) {
+                var d=obj[0].distance;
+                        //console.log("detected"+d);
+                var n=obj[0].face.normal;
+                var spring=v*dt+0.5-d;
+                if(spring>0){
+                    this.vel.x=0;
+                    this.vel.z=0;
+                    this.pos.x=this.lastpos.x;
+                    this.pos.z=this.lastpos.z;
+                }
+            }
+        }
+        /*
         for(var i=-res/2;i<res/2;i++){
             if(collided)continue;
             var rv=rotate(this.vel.x/v,this.vel.z/v,Math.PI/2/res*i);
@@ -70,23 +85,66 @@ var Car=function(){
             var obj = ray.intersectObjects(targetList);
             if (obj.length > 0) {
                 var d=obj[0].distance;
+                var n=obj[0].face.normal;
+                console.log(n);
                 if(d<0.5||(d<0.5+dpdt&&i==0)){
+                    this.vel.x+=this.vel.x*n.x*1;//-rv.x*v;
+                    this.vel.z+=this.vel.z*n.z*1;
+                    this.pos.x+=n.x*0.3;
+                    this.pos.z+=n.z*0.3;
+                    
                     if(timenow-this.collidedTime<100){
-                    this.vel.x=-rv.x*v;
-                    this.vel.z=-rv.y*v;
+                        this.vel.x=this.vel.x*n.x;//-rv.x*v;
+                        this.vel.z=-rv.y*v;
                     }else{
-                    this.vel.x+=-rv.x*v;
-                    this.vel.z+=-rv.y*v;
-                        
+                        this.vel.x+=-rv.x*v;
+                        this.vel.z+=-rv.y*v;
+
                     }
                     collided=true;
-                    
+
                     this.collidedTime=timenow;
                 }
             } 
+        }*/
+        //if(!collided){
+        this.lastpos.x=this.pos.x;
+        this.lastpos.z=this.pos.z;
+            this.pos.x+=this.vel.x*dt;
+            this.pos.z+=this.vel.z*dt;
+        //}
+        
+        var p=this.power;
+        {
+            var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,1,this.pos.z), new THREE.Vector3(0, -1, 0));
+            var obj = ray.intersectObjects(boostList);
+            if (obj.length > 0) {
+                //p+=this.boost;
+                this.boost=1;
+                //console.log("boost");
+            }
         }
-        this.pos.x+=this.vel.x*dt;
-        this.pos.z+=this.vel.z*dt;
+        this.boost-=dt;
+        if(this.boost>0){
+            this.vel.x=a.x*this.boostedSpeed;
+            this.vel.z=a.y*this.boostedSpeed;
+        }else{
+            this.vel.x+=dt*a.x*p;
+            this.vel.z+=dt*a.y*p;
+        }
+        var v1=rotate(this.vel.x,this.vel.z,-this.rot);
+        var relativeSideForce=v1.x;
+        var sideforce=rotate(v1.x,0,this.rot);
+        this.vel.x-=sideforce.x*dt*this.fric;
+        this.vel.z-=sideforce.y*dt*this.fric;
+        if(this.vel.x*this.vel.x+this.vel.z*this.vel.z>this.terminalVelocity*this.terminalVelocity){
+            this.vel.x+=this.vel.x*drag*10*dt;
+            this.vel.z+=this.vel.z*drag*10*dt;
+        }else{
+            //this.vel.x+=this.vel.x*drag*dt;
+            //this.vel.z+=this.vel.z*drag*dt;
+        }
+        
         var relativevelX;
         var relativevelZ;
         //order
@@ -106,10 +164,10 @@ var Car=function(){
         //this.dsq=
     }
     this.checklapend=function(){
-            if(this.cp>=cp.length){
-                this.lap++;
-                this.cp=1;
-            }
+        if(this.cp>=cp.length){
+            this.lap++;
+            this.cp=1;
+        }
     }
     this.goal=null;
     this.dsq=Infinity;

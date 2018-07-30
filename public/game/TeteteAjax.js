@@ -29,6 +29,26 @@ function doget(data, url, callback) {
     }
     xhr.send(data);
 }
+function dogetWithError(data, url, callback,error) {
+    console.log("called doget");
+    if (!url) return;
+    if (!callback) callback = function (responsetext) { };
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url, true);
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhr.onreadystatechange = function () {
+        if ((xhr.readyState === 4 && xhr.status === 0) || (xhr.readyState === 4 && xhr.status === 200)) {
+			console.log("callback doget-1");
+            callback(xhr.responseText);
+        }
+        if ( (xhr.readyState === 4 && xhr.status === 404)) {
+			console.log("callback doget erro");
+            error();
+        }
+		console.log("callback doget-2");
+    }
+    xhr.send(data);
+}
 function dopost(data, url, callback) {
     if (!url) return;
     if (!callback) callback = function (responsetext) { };
