@@ -142,6 +142,15 @@ var LoadStage=(function(){
             if(str==w1){
                 boostList.push(obj.children[i]);
             }
+            var w2="slope";
+            try{
+                str=obj.children[i].name.slice(0,w2.length);
+            }catch(e){
+                continue;
+            }
+            if(str==w2){
+                slopeList.push(obj.children[i]);
+            }
         }
         scene.add( obj );
         loadstats--;

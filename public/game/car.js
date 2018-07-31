@@ -15,9 +15,9 @@ var Car=function(){
         scene.add(this.mesh);
     }
     this.cid=null;
-    this.pos={x:0,z:-20};
-    this.lastpos={x:0,z:-20};
-    this.vel={x:0,z:0};
+    this.pos={x:0,y:0,z:-20};
+    this.lastpos={x:0,y:0,z:-20};
+    this.vel={x:0,y:0,z:0};
     this.rot=0;//radian
     this.fric=10;
     this.drag=1;
@@ -27,7 +27,7 @@ var Car=function(){
     this.boost=0;
     this.terminalVelocity=30;
     this.reset=function(){
-        this.pos={x:Math.floor(this.cid%5),z:Math.floor(this.cid/5)};
+        this.pos={x:Math.floor(this.cid%5),y:0,z:Math.floor(this.cid/5)};
         this.vel={x:0,z:0};
         this.rot=0;
     }
@@ -35,7 +35,7 @@ var Car=function(){
         if(this.mesh==null)return;
         this.mesh.position.x=-this.pos.x;
         this.mesh.position.z=this.pos.z;
-        this.mesh.position.y=0.25;
+        this.mesh.position.y=0.25+this.pos.y;
         this.mesh.rotation.y=this.rot;
     }
     this.collidedTime=0;
@@ -59,20 +59,22 @@ var Car=function(){
         var collided=false;
         var mg=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
         var dpdt=mg*dt;
-        {
+        for(var i=-3;i<3;i++){
+            var h=i*0.1;
             var rv=rotate(this.vel.x/v,this.vel.z/v,0);
-            var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,0,this.pos.z), new THREE.Vector3(-rv.x, 0, rv.y).normalize());
-            
+            var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,this.pos.y+h,this.pos.z), new THREE.Vector3(-rv.x, 0, rv.y).normalize());
+
             var obj = ray.intersectObjects(targetList);
             if (obj.length > 0) {
                 var d=obj[0].distance;
-                        //console.log("detected"+d);
+                //console.log("detected"+d);
                 var n=obj[0].face.normal;
                 var spring=v*dt+0.5-d;
                 if(spring>0){
                     this.vel.x=0;
                     this.vel.z=0;
                     this.pos.x=this.lastpos.x;
+                    this.pos.y=this.lastpos.y;
                     this.pos.z=this.lastpos.z;
                 }
             }
@@ -92,7 +94,7 @@ var Car=function(){
                     this.vel.z+=this.vel.z*n.z*1;
                     this.pos.x+=n.x*0.3;
                     this.pos.z+=n.z*0.3;
-                    
+
                     if(timenow-this.collidedTime<100){
                         this.vel.x=this.vel.x*n.x;//-rv.x*v;
                         this.vel.z=-rv.y*v;
@@ -110,18 +112,41 @@ var Car=function(){
         //if(!collided){
         this.lastpos.x=this.pos.x;
         this.lastpos.z=this.pos.z;
-            this.pos.x+=this.vel.x*dt;
-            this.pos.z+=this.vel.z*dt;
+
+        this.lastpos.y=this.pos.y;
+        this.pos.x+=this.vel.x*dt;
+        this.pos.z+=this.vel.z*dt;
         //}
-        
+
         var p=this.power;
         {
-            var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,1,this.pos.z), new THREE.Vector3(0, -1, 0));
-            var obj = ray.intersectObjects(boostList);
-            if (obj.length > 0) {
-                //p+=this.boost;
-                this.boost=1;
-                //console.log("boost");
+            for(var i=0;i<4;i++){
+                var v=rotate(0,1,this.rot+Math.PI/2*i);
+                var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,this.pos.y+1,this.pos.z), new THREE.Vector3(0, -1, 0));
+                var obj = ray.intersectObjects(boostList);
+                if (obj.length > 0) {
+                    //p+=this.boost;
+                    this.boost=1;
+                    //console.log(obj[0]);
+                }
+                var obj = ray.intersectObjects(slopeList);
+                if (obj.length > 0) {
+                        this.pos.y=obj[0].point.y;
+                        this.vel.y=0;
+                    //p+=this.boost;
+                    //console.log("boost");
+                }else {
+                    this.pos.y=0;
+                    /*
+                    console.log(this.vel.y);
+                    if(this.pos.y<=0){
+                        this.vel.y=0;
+                    }
+                    this.pos.y+=dt*this.vel.y;
+                    if(this.vel.y>-9){
+                        this.vel.y-=dt*9;
+                    }*/
+                }
             }
         }
         this.boost-=dt;
@@ -144,7 +169,7 @@ var Car=function(){
             //this.vel.x+=this.vel.x*drag*dt;
             //this.vel.z+=this.vel.z*drag*dt;
         }
-        
+
         var relativevelX;
         var relativevelZ;
         //order

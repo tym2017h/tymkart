@@ -6,7 +6,7 @@ var cidgen=0;
 var gameid=0;
 var car=function(){
     this.goal=null;
-    this.pos={x:0,z:0};
+    this.pos={x:0,z:0,y:0};
     this.vel={x:0,z:0};
     this.rot=0;
     this.cid=cidgen;
@@ -122,8 +122,9 @@ app.post('/setpos', function (request, response) {
                     car1.vel.x=vx;
                     car1.vel.z=vz;
                 }
-                if(p.x!=null&&p.z!=null){
+                if(p.x!=null&&p.z!=null&&p.y!=null){
                     car1.pos.x=p.x;
+                    car1.pos.y=p.y;
                     car1.pos.z=p.z;
                 }
                 car1.rot=r;

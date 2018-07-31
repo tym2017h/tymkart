@@ -12,6 +12,7 @@ document.body.appendChild(renderer.domElement);
 var order=0;
 var targetList=[];
 var boostList=[];
+var slopeList=[];
 var projector = new THREE.Projector();
 var ambient=0x444477;
 var sun=0xbbbb88;
@@ -290,12 +291,12 @@ function timer(){
     }
     if(player.mesh!=null){
         camera.position.x=player.mesh.position.x-Math.sin(player.rot)*12;
-        camera.position.y=5;
+        camera.position.y=player.mesh.position.y+4.75;
         camera.position.z=player.mesh.position.z-Math.cos(player.rot)*12;
         //camera.rotation.x=Math.PI/4;
-        arrow.position.set(player.mesh.position.x,4,player.mesh.position.z);
+        arrow.position.set(player.mesh.position.x,player.mesh.position.y+3.75,player.mesh.position.z);
         arrow.rotation.y=-Math.atan2(cp[player.cp].x-player.pos.x,cp[player.cp].z-player.pos.z);
-        var p={x:player.mesh.position.x,y:3,z:player.mesh.position.z};
+        var p={x:player.mesh.position.x,y:player.mesh.position.y,z:player.mesh.position.z};
         camera.lookAt(p);
         //p.rotation.y+=handle*0.1;
     }

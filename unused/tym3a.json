@@ -1,0 +1,34 @@
+{
+    "metadata":{
+        "version":3,
+        "type":"BufferGeometry",
+        "normal":4,
+        "position":4,
+        "uv":4,
+        "generator":"io_three"
+    },
+    "data":{
+        "attributes":{
+            "normal":{
+                "type":"Float32Array",
+                "itemSize":3,
+                "array":[0.818464,-0,0.574557,0.818464,-0,0.574557,0.818464,-0,0.574557,0.818464,0,0.574557]
+            },
+            "position":{
+                "type":"Float32Array",
+                "itemSize":3,
+                "array":[-105.103,6.23707,24.0341,-106.766,7.89222,26.4024,-106.766,6.23707,26.4024,-105.103,7.89222,24.0341]
+            },
+            "uv":{
+                "type":"Float32Array",
+                "itemSize":2,
+                "array":[1.01424,0.960878,-0.014243,0.0861929,1.01424,0.0861934,-0.014243,0.960878]
+            }
+        },
+        "index":{
+            "type":"Uint16Array",
+            "itemSize":1,
+            "array":[0,1,2,0,3,1]
+        }
+    }
+}
