@@ -80,6 +80,9 @@ app.get('/carlist', function (request, response) {
 app.get('/a', function (request, response) {
     response.send("test");
 });
+app.get('/state', function (request, response) {
+    response.send(state);
+});
 function getcarindex(cid){
     for(var i=0;i<cars.length;i++){
         if(cars[i].cid==cid)return i;

@@ -180,8 +180,23 @@ var timenow=new Date().getTime();
 console.log(player.pos);
 var firststate=null;
 var rawstate=state;
+var sent_state=false;
 function timer(){
     if(loadstats>0){
+        if(neutralTime>end){
+            if(!sent_state){
+                sent_state=true;
+                dogetWithError("","/state",function(res){
+                    if(res=="wait"){
+                        location.reload();
+                    }
+                    sent_state=false;
+                }
+                               ,function(res){
+                    location.reload();
+                });
+            }
+        }
         requestAnimationFrame(timer);
         return;
     }
@@ -230,14 +245,13 @@ function timer(){
             }
             netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
                 "<br>pos:"+Math.floor(player.pos.x)+","
-            +Math.floor(player.pos.z);
+                +Math.floor(player.pos.z);
         });
         sent=true;
     }
-            
+
     //netdiv.innerHTML=            "<br>pos:"+Math.floor(player.pos.x)+","            +Math.floor(player.pos.z);
-    if(neutralTime>next&&(rawstate!=="result")){
-        location.reload();
+    if(neutralTime>next){
         loadstats=1;
         return;
     }else if(neutralTime>end){
@@ -311,7 +325,7 @@ function timer(){
     //console.log(scene);
     //console.log(camera);
     try{
-    renderer.render( scene, camera );  
+        renderer.render( scene, camera );  
     }catch(e){
         //console.log(e)
     }

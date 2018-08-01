@@ -42,7 +42,7 @@ function dogetWithError(data, url, callback,error) {
             callback(xhr.responseText);
         }
         if ( (xhr.readyState === 4 && xhr.status === 404)) {
-			console.log("callback doget erro");
+			console.log("callback doget error");
             error();
         }
 		console.log("callback doget-2");
