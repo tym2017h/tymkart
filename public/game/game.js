@@ -204,7 +204,7 @@ function timer(){
             lag=new Date().getTime()- senttime;
             sent=false; 
             if(res=="nocar"){
-                if(rawstate=="result")rawstate="wait";
+                //if(rawstate=="result")rawstate="wait";
                 if(creatingcar)return;
                 creatingcar=true;
                 return;
