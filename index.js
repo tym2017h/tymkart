@@ -107,8 +107,10 @@ app.post('/setpos', function (request, response) {
                 g=true;
             }
         }
-        if(g)
-            console.log("goal");
+        if(g){
+            end=time+30000;
+            next=time+40000;
+        }
     }
     /*
     if(request.body==null)
