@@ -89,7 +89,6 @@ function getcarindex(cid){
 app.post('/setpos', function (request, response) {
     console.log(request.body);
     var time=new Date().getTime();
-    lastConnection=time;
     if(time>next){
         switchState();
     } else if(time>end){
@@ -100,10 +99,22 @@ app.post('/setpos', function (request, response) {
         state="wait";
     }
     console.log(state);
+    console.log("last connection:"+(time-lastConnection));
+    if(end-time>30000&&state=="race"){
+        var g=false;
+        for(var i=0;i<cars.length;i++){
+            if(cars[i].goal){
+                g=true;
+            }
+        }
+        if(g)
+            console.log("goal");
+    }
     /*
     if(request.body==null)
         response.send(JSON.stringify(cars));
    */
+    lastConnection=time;
     if(request.body.rot!=null&&request.body.pos!=null&&
        request.body.cid!=null&&request.body.acc!=null&&
        request.body.vel!=null){
