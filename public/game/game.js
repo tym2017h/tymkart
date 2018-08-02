@@ -253,6 +253,7 @@ function timer(){
     //netdiv.innerHTML=            "<br>pos:"+Math.floor(player.pos.x)+","            +Math.floor(player.pos.z);
     if(neutralTime>next){
         loadstats=1;
+        requestAnimationFrame(timer);
         return;
     }else if(neutralTime>end){
         state="result";
