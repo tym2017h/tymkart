@@ -54,7 +54,7 @@ var Car=function(){
             return;*/
         }
         //collision
-        netdiv.innerHTML=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
+        //netdiv.innerHTML=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
         var res=8;
         var collided=false;
         var mg=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
