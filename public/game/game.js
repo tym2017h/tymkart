@@ -48,6 +48,8 @@ var carMat = new THREE.MeshLambertMaterial( { color: 0xffffff} );
 var player=new Car();
 
 var arrow;
+
+const LOW_FPS_TEST=true;
 (function(){
     var geom = new THREE.Geometry(); 
     var v1 = new THREE.Vector3(1,0,2);
@@ -332,7 +334,11 @@ function timer(){
     }
     ui();
     lasttime=timenow;
+    if(LOW_FPS_TEST){
+        setTimeout(timer,100);
+    }else{
     requestAnimationFrame(timer);
+    }
 }
 check();
 function init(){
