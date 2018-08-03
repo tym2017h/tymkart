@@ -44,7 +44,7 @@ var Car=function(){
         //k=-ma/vel
         var drag=-this.power/this.terminalVelocity;
         var a=rotate(0,this.acc,this.rot);
-        var v=Math.sqrt(this.vel.x*this.vel.x+this.vel.z*this.vel.z);
+        var abvel=XZDistance({x:0,z:0},this.vel);
         if(!isplayer){
             /*
             this.vel.x+=dt*a.x;
@@ -61,7 +61,7 @@ var Car=function(){
         var dpdt=mg*dt;
         for(var i=-3;i<3;i++){
             var h=i*0.1;
-            var rv=rotate(this.vel.x/v,this.vel.z/v,0);
+            var rv=rotate(this.vel.x/abvel,this.vel.z/abvel,0);
             var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,this.pos.y+h,this.pos.z), new THREE.Vector3(-rv.x, 0, rv.y).normalize());
 
             var obj = ray.intersectObjects(targetList);
@@ -69,7 +69,7 @@ var Car=function(){
                 var d=obj[0].distance;
                 //console.log("detected"+d);
                 var n=obj[0].face.normal;
-                var spring=v*dt+0.5-d;
+                var spring=abvel*dt+0.5-d;
                 if(spring>0){
                     this.vel.x=0;
                     this.vel.z=0;
@@ -110,12 +110,6 @@ var Car=function(){
             } 
         }*/
         //if(!collided){
-        this.lastpos.x=this.pos.x;
-        this.lastpos.z=this.pos.z;
-
-        this.lastpos.y=this.pos.y;
-        this.pos.x+=this.vel.x*dt;
-        this.pos.z+=this.vel.z*dt;
         //}
 
         var p=this.power;
@@ -127,33 +121,36 @@ var Car=function(){
                 var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x+vec.x,this.pos.y+1,this.pos.z+vec.y), new THREE.Vector3(0, -1, 0));
                 var obj = ray.intersectObjects(boostList);
                 if (obj.length > 0) {
-                    //p+=this.boost;
                     this.boost=1;
-                    //console.log(obj[0]);
                 }
                 var obj = ray.intersectObjects(slopeList);
                 if (obj.length > 0) {
                     if(tempY<obj[0].point.y){
                         tempY=obj[0].point.y;
                     }
-                    //p+=this.boost;
-                    //console.log("boost");
-                }else {
-                    //this.pos.y=0;
-                    /*
-                    console.log(this.vel.y);
-                    if(this.pos.y<=0){
-                        this.vel.y=0;
+                }
+            }
+            if(tempY<this.pos.y){
+                var ray = new THREE.Raycaster(new THREE.Vector3(-this.lastpos.x,this.lastpos.y+1,this.lastpos.z), new THREE.Vector3(-this.vel.x, 0, this.vel.z).normalize());
+                var obj = ray.intersectObjects(slopeList);
+                var dd=XZDistance({x:0,z:0},this.vel)*dt;
+                if (obj.length > 0){
+                    console.log((obj[0].point.y-this.lastpos.y)/obj[0].distance);
+                    if(obj[0].distance<dd&&obj[0].point.y>this.lastpos.y) {
+                        tempY=this.lastpos.y+(obj[0].point.y-this.lastpos.y)*dd/obj[0].distance;
                     }
-                    this.pos.y+=dt*this.vel.y;
-                    if(this.vel.y>-9){
-                        this.vel.y-=dt*9;
-                    }*/
                 }
             }
             this.pos.y=tempY;
             this.vel.y=0;
         }
+        this.lastpos.x=this.pos.x;
+        this.lastpos.z=this.pos.z;
+
+        this.lastpos.y=this.pos.y;
+        this.pos.x+=this.vel.x*dt;
+        this.pos.z+=this.vel.z*dt;
+
         this.boost-=dt;
         if(this.boost>0){
             this.vel.x=a.x*this.boostedSpeed;
@@ -201,4 +198,7 @@ var Car=function(){
     }
     this.goal=null;
     this.dsq=Infinity;
+    function XZDistance(v1,v2){
+        return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z))
+    }
 };
