@@ -81,6 +81,16 @@ app.get('/a', function (request, response) {
     response.send("test");
 });
 app.get('/state', function (request, response) {
+    var time=new Date().getTime();
+    if(time>next){
+        switchState();
+    } else if(time>end){
+        state="result";
+    } else if(time>start){
+        state="race";
+    } else {
+        state="wait";
+    }
     response.send(state);
 });
 function getcarindex(cid){
