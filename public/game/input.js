@@ -21,50 +21,50 @@ window.onkeyup = function (ev) {
     keysPress[ev.keyCode] = false;
 }
 //37 39
-rightButton.addEventListener('touchstart', function (e) {
+rightImg.addEventListener('touchstart', function (e) {
     if(e.touches){
         keysPress[37] = true;
     }
     e.preventDefault();
 }, false);
-rightButton.addEventListener('touchmove', function (e) {
+rightImg.addEventListener('touchmove', function (e) {
     if(e.touches){
         keysPress[37] = true;
     }
     e.preventDefault();
 }, false);
-rightButton.addEventListener('touchend', function (e) {
+rightImg.addEventListener('touchend', function (e) {
     if(e.touches){
         keysPress[37] = false;
     }
     e.preventDefault();
 }, false);
-rightButton.addEventListener('touchcancel', function (e) {
+rightImg.addEventListener('touchcancel', function (e) {
     if(e.touches){
         keysPress[37] = false;
     }
     e.preventDefault();
 }, false);
 
-leftButton.addEventListener('touchstart', function (e) {
+leftImg.addEventListener('touchstart', function (e) {
     if(e.touches){
         keysPress[39] = true;
     }
     e.preventDefault();
 }, false);
-leftButton.addEventListener('touchmove', function (e) {
+leftImg.addEventListener('touchmove', function (e) {
     if(e.touches){
         keysPress[39] = true;
     }
     e.preventDefault();
 }, false);
-leftButton.addEventListener('touchend', function (e) {
+leftImg.addEventListener('touchend', function (e) {
     if(e.touches){
         keysPress[39] = false;
     }
     e.preventDefault();
 }, false);
-leftButton.addEventListener('touchcancel', function (e) {
+leftImg.addEventListener('touchcancel', function (e) {
     if(e.touches){
         keysPress[39] = false;
     }
