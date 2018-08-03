@@ -49,7 +49,7 @@ var player=new Car();
 
 var arrow;
 
-const LOW_FPS_TEST=true;
+const LOW_FPS_TEST=false;
 (function(){
     var geom = new THREE.Geometry(); 
     var v1 = new THREE.Vector3(1,0,2);

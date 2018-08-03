@@ -120,9 +120,11 @@ var Car=function(){
 
         var p=this.power;
         {
+            var tempY=0;
             for(var i=0;i<4;i++){
-                var v=rotate(0,1,this.rot+Math.PI/2*i);
-                var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x,this.pos.y+1,this.pos.z), new THREE.Vector3(0, -1, 0));
+                var vec=rotate(0,1,this.rot+Math.PI/2*i);
+                //console.log(vec);
+                var ray = new THREE.Raycaster(new THREE.Vector3(-this.pos.x+vec.x,this.pos.y+1,this.pos.z+vec.y), new THREE.Vector3(0, -1, 0));
                 var obj = ray.intersectObjects(boostList);
                 if (obj.length > 0) {
                     //p+=this.boost;
@@ -131,12 +133,13 @@ var Car=function(){
                 }
                 var obj = ray.intersectObjects(slopeList);
                 if (obj.length > 0) {
-                        this.pos.y=obj[0].point.y;
-                        this.vel.y=0;
+                    if(tempY<obj[0].point.y){
+                        tempY=obj[0].point.y;
+                    }
                     //p+=this.boost;
                     //console.log("boost");
                 }else {
-                    this.pos.y=0;
+                    //this.pos.y=0;
                     /*
                     console.log(this.vel.y);
                     if(this.pos.y<=0){
@@ -148,6 +151,8 @@ var Car=function(){
                     }*/
                 }
             }
+            this.pos.y=tempY;
+            this.vel.y=0;
         }
         this.boost-=dt;
         if(this.boost>0){
