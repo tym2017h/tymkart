@@ -47,6 +47,7 @@ rightImg.addEventListener('touchcancel', function (e) {
 }, false);
 
 leftImg.addEventListener('touchstart', function (e) {
+    alert("left");
     if(e.touches){
         keysPress[39] = true;
     }
