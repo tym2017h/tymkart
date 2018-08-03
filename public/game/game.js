@@ -189,6 +189,7 @@ function timer(){
             if(!sent_state){
                 sent_state=true;
                 dogetWithError("","/state",function(res){
+                    netdiv.innerHTML=res;
                     if(res=="wait"){
                         location.reload();
                     }
