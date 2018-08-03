@@ -20,7 +20,58 @@ window.onkeydown = function (ev) {
 window.onkeyup = function (ev) {
     keysPress[ev.keyCode] = false;
 }
+//37 39
+rightButton.addEventListener('touchstart', function (e) {
+    if(e.touches){
+        keysPress[37] = true;
+    }
+    e.preventDefault();
+}, false);
+rightButton.addEventListener('touchmove', function (e) {
+    if(e.touches){
+        keysPress[37] = true;
+    }
+    e.preventDefault();
+}, false);
+rightButton.addEventListener('touchend', function (e) {
+    if(e.touches){
+        keysPress[37] = false;
+    }
+    e.preventDefault();
+}, false);
+rightButton.addEventListener('touchcancel', function (e) {
+    if(e.touches){
+        keysPress[37] = false;
+    }
+    e.preventDefault();
+}, false);
 
+leftButton.addEventListener('touchstart', function (e) {
+    if(e.touches){
+        keysPress[39] = true;
+    }
+    e.preventDefault();
+}, false);
+leftButton.addEventListener('touchmove', function (e) {
+    if(e.touches){
+        keysPress[39] = true;
+    }
+    e.preventDefault();
+}, false);
+leftButton.addEventListener('touchend', function (e) {
+    if(e.touches){
+        keysPress[39] = false;
+    }
+    e.preventDefault();
+}, false);
+leftButton.addEventListener('touchcancel', function (e) {
+    if(e.touches){
+        keysPress[39] = false;
+    }
+    e.preventDefault();
+}, false);
+
+/*
 window.addEventListener('touchstart', function (e) {
     if(e.touches){
         tilt=0;
@@ -50,6 +101,7 @@ window.addEventListener('touchmove', function (e) {
     e.preventDefault();
 } ,false);
 window.addEventListener('touchcancel', function (e) {
+    
     if(e.touches){
         tilt=0;
     }
@@ -60,4 +112,6 @@ window.addEventListener('touchend', function (e) {
         tilt=0;
     }
     e.preventDefault();
-}, false);
+}, false);*/
+//var leftTouch=false;
+//var RightTouch=false;
