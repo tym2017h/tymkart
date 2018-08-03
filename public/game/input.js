@@ -20,59 +20,6 @@ window.onkeydown = function (ev) {
 window.onkeyup = function (ev) {
     keysPress[ev.keyCode] = false;
 }
-//37 39
-rightImg.addEventListener('touchstart', function (e) {
-    if(e.touches){
-        keysPress[37] = true;
-    }
-    e.preventDefault();
-}, false);
-rightImg.addEventListener('touchmove', function (e) {
-    if(e.touches){
-        keysPress[37] = true;
-    }
-    e.preventDefault();
-}, false);
-rightImg.addEventListener('touchend', function (e) {
-    if(e.touches){
-        keysPress[37] = false;
-    }
-    e.preventDefault();
-}, false);
-rightImg.addEventListener('touchcancel', function (e) {
-    if(e.touches){
-        keysPress[37] = false;
-    }
-    e.preventDefault();
-}, false);
-
-leftImg.addEventListener('touchstart', function (e) {
-    alert("left");
-    if(e.touches){
-        keysPress[39] = true;
-    }
-    e.preventDefault();
-}, false);
-leftImg.addEventListener('touchmove', function (e) {
-    if(e.touches){
-        keysPress[39] = true;
-    }
-    e.preventDefault();
-}, false);
-leftImg.addEventListener('touchend', function (e) {
-    if(e.touches){
-        keysPress[39] = false;
-    }
-    e.preventDefault();
-}, false);
-leftImg.addEventListener('touchcancel', function (e) {
-    if(e.touches){
-        keysPress[39] = false;
-    }
-    e.preventDefault();
-}, false);
-
-/*
 window.addEventListener('touchstart', function (e) {
     if(e.touches){
         tilt=0;
@@ -113,6 +60,4 @@ window.addEventListener('touchend', function (e) {
         tilt=0;
     }
     e.preventDefault();
-}, false);*/
-//var leftTouch=false;
-//var RightTouch=false;
+}, false);
