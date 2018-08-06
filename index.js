@@ -199,8 +199,8 @@ app.post('/setpos', function (request, response) {
     }
     var rr=JSON.stringify({cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
                            time:new Date().getTime()});
-    console.log(rr);
-    response.send();
+    //console.log(rr);
+    response.send(rr);
 });
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
