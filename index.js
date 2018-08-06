@@ -143,7 +143,7 @@ app.post('/setpos', function (request, response) {
         var vx=request.body.vel.x;
         var vz=request.body.vel.z;
         var spin=request.body.spin;
-        
+
         console.log("carindex:"+c);
         try{
             if(checkNumber(c)){
@@ -155,9 +155,9 @@ app.post('/setpos', function (request, response) {
                     console.log("a");
                     return;
                 }
-                if(checkNumber(np.x)&&
-                   checkNumber(np.z)&&
-                   checkNumber(np.y)){
+                if(checkNumber(p.x)&&
+                   checkNumber(p.z)&&
+                   checkNumber(p.y)){
                     car1.pos.x=p.x;
                     car1.pos.y=p.y;
                     car1.pos.z=p.z;
@@ -174,7 +174,7 @@ app.post('/setpos', function (request, response) {
                     return;
                 }
                 if(request.body.goal==null||
-                  checkNumber(request.body.goal)){
+                   checkNumber(request.body.goal)){
                     car1.goal=request.body.goal;
                 }else{
                     console.log("d");
@@ -183,7 +183,7 @@ app.post('/setpos', function (request, response) {
                 if(spin!=null||checkNumber(spin)){
                     car1.spin=spin;
                 }else{
-                    
+
                     console.log("e");
                     return;
                 }
@@ -194,11 +194,13 @@ app.post('/setpos', function (request, response) {
             }
         }catch(e){}
     }else{
-        
-                    console.log("f");
+
+        console.log("f");
     }
-    response.send(JSON.stringify({cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
-                                  time:new Date().getTime()}));
+    var rr=JSON.stringify({cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
+                           time:new Date().getTime()});
+    console.log(rr);
+    response.send();
 });
 app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
