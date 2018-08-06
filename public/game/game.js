@@ -17,6 +17,18 @@ var projector = new THREE.Projector();
 var ambient=0x444477;
 var sun=0xbbbb88;
 var camera = new THREE.PerspectiveCamera();
+
+var fieldItems=[
+    new Item(0,0,280)
+];
+
+function Item(x,y,z){
+    this.id=0;
+    this.p={x:x,y:y,z:z};
+    this.cp=0;
+    this.uuid=Math.random();
+}
+
 camera.aspect=width/height;
 camera.fov=80;
 camera.updateProjectionMatrix();
@@ -135,6 +147,7 @@ function updatecars(cs){
                 othercar[j].acc=cs[i].acc;
                 othercar[j].goal=cs[i].goal;
                 othercar[j].audience=cs[i].audience;
+                othercar[j].spin=cs[i].spin;
                 //othercar[j].physics(lag*0.001);
                 exists=true;
             }
@@ -147,6 +160,7 @@ function updatecars(cs){
             newcar.rot=cs[i].rot;
             newcar.acc=cs[i].acc;
             newcar.goal=cs[i].goal;
+            newcar.spin=cs[i].spin;
             newcar.audience=cs[i].audience;
             if(carobj!=null){
                 var obj1=carobj.GdeepCloneMaterials();
@@ -217,6 +231,7 @@ function timer(){
         d.cid=player.cid;
         d.acc=player.acc;
         d.goal=player.goal;
+        d.spin=player.spin;
         senttime=timenow;
         dopost(JSON.stringify(d),"/setpos",function(res){
             lag=new Date().getTime()- senttime;
@@ -338,7 +353,7 @@ function timer(){
     if(LOW_FPS_TEST){
         setTimeout(timer,100);
     }else{
-    requestAnimationFrame(timer);
+        requestAnimationFrame(timer);
     }
 }
 check();

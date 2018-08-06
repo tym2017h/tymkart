@@ -15,6 +15,7 @@ var car=function(){
     this.dsq=0;
     this.acc=0;
     this.audience=false;
+    this.spin=0;
     cidgen++;
 };
 var cars=[];
@@ -140,6 +141,7 @@ app.post('/setpos', function (request, response) {
         var c=getcarindex(cid);
         var vx=request.body.vel.x;
         var vz=request.body.vel.z;
+        var spin=request.body.spin;
         console.log("carindex:"+c);
         try{
             if(c!=null){
@@ -156,6 +158,9 @@ app.post('/setpos', function (request, response) {
                 car1.rot=r;
                 car1.acc=a;
                 car1.goal=request.body.goal;
+                if(spin!=null){
+                    car1.spin=spin;
+                }
                 cars[c]=car1;
             }else{
                 response.send("nocar");

@@ -1,5 +1,5 @@
-
 var Car=function(){
+    this.item=0;//0:none 1:banana 2:red
     this.audience=false;
     this.cp=0;
     this.lap=1;
@@ -26,6 +26,8 @@ var Car=function(){
     this.boostedSpeed=50;
     this.boost=0;
     this.terminalVelocity=30;
+    this.spin=1;
+    this.effectRot=0;
     this.reset=function(){
         this.pos={x:Math.floor(this.cid%5),y:0,z:Math.floor(this.cid/5)};
         this.vel={x:0,z:0};
@@ -36,7 +38,7 @@ var Car=function(){
         this.mesh.position.x=-this.pos.x;
         this.mesh.position.z=this.pos.z;
         this.mesh.position.y=0.25+this.pos.y;
-        this.mesh.rotation.y=this.rot;
+        this.mesh.rotation.y=this.rot+this.effectRot;
     }
     this.collidedTime=0;
     this.physics=function(dt,isplayer){
@@ -152,12 +154,20 @@ var Car=function(){
         this.pos.z+=this.vel.z*dt;
 
         this.boost-=dt;
-        if(this.boost>0){
-            this.vel.x=a.x*this.boostedSpeed;
-            this.vel.z=a.y*this.boostedSpeed;
+        if(this.spin<=0){
+            this.effectRot=0;
+            if(this.boost>0){
+                this.vel.x=a.x*this.boostedSpeed;
+                this.vel.z=a.y*this.boostedSpeed;
+            }else{
+                this.vel.x+=dt*a.x*p;
+                this.vel.z+=dt*a.y*p;
+            }
         }else{
-            this.vel.x+=dt*a.x*p;
-            this.vel.z+=dt*a.y*p;
+            this.vel.x+=0;    
+            this.vel.z+=0;
+            this.spin-=dt;
+            this.effectRot+=dt*6;
         }
         var v1=rotate(this.vel.x,this.vel.z,-this.rot);
         var relativeSideForce=v1.x;
