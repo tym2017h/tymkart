@@ -131,6 +131,7 @@ app.post('/setpos', function (request, response) {
         response.send(JSON.stringify(cars));
    */
     lastConnection=time;
+    console.log("aaa"+checkNumber(10));
     if(request.body.rot!=null&&request.body.pos!=null&&
        checkNumber(request.body.cid)&&request.body.acc!=null&&
        request.body.vel!=null){
@@ -151,6 +152,7 @@ app.post('/setpos', function (request, response) {
                     car1.vel.x=vx;
                     car1.vel.z=vz;
                 }else{
+                    console.log("a");
                     return;
                 }
                 if(checkNumber(np.x)&&
@@ -160,6 +162,7 @@ app.post('/setpos', function (request, response) {
                     car1.pos.y=p.y;
                     car1.pos.z=p.z;
                 }else{
+                    console.log("b");
                     return;
                 }
                 if(checkNumber(r)&&
@@ -167,16 +170,22 @@ app.post('/setpos', function (request, response) {
                     car1.rot=r;
                     car1.acc=a;
                 }else{
+                    console.log("c");
                     return;
                 }
                 if(request.body.goal==null||
                   checkNumber(request.body.goal)){
                     car1.goal=request.body.goal;
                 }else{
+                    console.log("d");
                     return;
                 }
                 if(spin!=null||checkNumber(spin)){
                     car1.spin=spin;
+                }else{
+                    
+                    console.log("e");
+                    return;
                 }
                 cars[c]=car1;
             }else{
@@ -184,6 +193,9 @@ app.post('/setpos', function (request, response) {
                 return;
             }
         }catch(e){}
+    }else{
+        
+                    console.log("f");
     }
     response.send(JSON.stringify({cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
                                   time:new Date().getTime()}));
