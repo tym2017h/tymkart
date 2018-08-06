@@ -102,9 +102,39 @@ var tbody=document.createElement("tbody");
 resultTable.appendChild(tbody);
 document.body.appendChild(resultTable);
 var tabletxt1="";
+
+var itemImg=document.createElement("div");
+itemImg.style.backgroundImage="url('textures/toyama.gif')";
+itemImg.style.width="100%";
+itemImg.style.height="100%";
+itemImg.style.backgroundSize="cover";
+
+var itemtextures=[
+    "",
+    "",
+    "textures/toyama.gif",
+    "textures/right.png",
+];
+
+var itemButton=document.createElement("div");
+itemButton.style.position="absolute";
+itemButton.style.zIndex="1";
+itemButton.style.color="white";
+itemButton.style.top= (window.innerHeight*0.9)+"px";
+itemButton.style.left=(window.innerWidth*0.45)+"px";
+itemButton.style.height=(window.innerWidth*0.1)+"px";
+itemButton.style.width=(window.innerWidth*0.1)+"px";
+setItemBackground(0);
+document.body.appendChild(itemButton);
+itemButton.appendChild(itemImg);
+
+function setItemBackground(srcId){
+    var target="url('"+itemtextures[srcId]+"')";
+    if(itemImg.style.backgroundImage!=target)  itemImg.style.backgroundImage=target;
+}
 function ui(){
     var laptxt=state+" ";
-    
+
     if(state=="result"||player.goal){
         if(dialogdiv.style.visibility!="visible")
             dialogdiv.style.visibility="visible";

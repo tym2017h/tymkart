@@ -1,5 +1,5 @@
 var Car=function(){
-    this.item=0;//0:none 1:banana 2:red
+    this.item=0;//0:none 2:banana 3:red
     this.audience=false;
     this.cp=0;
     this.lap=1;
@@ -26,7 +26,7 @@ var Car=function(){
     this.boostedSpeed=50;
     this.boost=0;
     this.terminalVelocity=30;
-    this.spin=1;
+    this.spin=0;
     this.effectRot=0;
     this.reset=function(){
         this.pos={x:Math.floor(this.cid%5),y:0,z:Math.floor(this.cid/5)};
@@ -154,6 +154,26 @@ var Car=function(){
         this.pos.z+=this.vel.z*dt;
 
         this.boost-=dt;
+        var collidedItems=[];
+        for(var i=0;i<fieldItems.length;i++){
+            if(XYZDistance(fieldItems[i].p,this.pos)<0.5+fieldItems[i].size){
+                collidedItems.push(fieldItems[i]);
+            }
+        }
+        for(var i=0;i<collidedItems.length;i++){
+            switch(collidedItems[i].id){
+                case 2:
+                case 3:
+                    this.spin=1;
+                    break;
+                case 1:
+                    if(this.item!=0)
+                        this.item=Math.floor(Math.random()*2)+2;
+                    break;
+            }
+            removeItem(collidedItems[i].uuid);
+            //removeItem(collidedItemsId[i]);
+        }
         if(this.spin<=0){
             this.effectRot=0;
             if(this.boost>0){
@@ -164,8 +184,8 @@ var Car=function(){
                 this.vel.z+=dt*a.y*p;
             }
         }else{
-            this.vel.x+=0;    
-            this.vel.z+=0;
+            this.vel.x=0;
+            this.vel.z=0;
             this.spin-=dt;
             this.effectRot+=dt*6;
         }
@@ -208,6 +228,9 @@ var Car=function(){
     }
     this.goal=null;
     this.dsq=Infinity;
+    function XYZDistance(v1,v2){
+        return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z)+(v1.y-v2.y)*(v1.y-v2.y))
+    }
     function XZDistance(v1,v2){
         return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z))
     }

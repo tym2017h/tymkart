@@ -132,7 +132,7 @@ app.post('/setpos', function (request, response) {
    */
     lastConnection=time;
     if(request.body.rot!=null&&request.body.pos!=null&&
-       request.body.cid!=null&&request.body.acc!=null&&
+       checkNumber(request.body.cid)&&request.body.acc!=null&&
        request.body.vel!=null){
         var cid=request.body.cid;
         var p=request.body.pos;
@@ -142,23 +142,40 @@ app.post('/setpos', function (request, response) {
         var vx=request.body.vel.x;
         var vz=request.body.vel.z;
         var spin=request.body.spin;
+        
         console.log("carindex:"+c);
         try{
-            if(c!=null){
+            if(checkNumber(c)){
                 var car1=cars[c];
-                if(vx!=null&&vz!=null){
+                if(checkNumber(vx)&&checkNumber(vz)){
                     car1.vel.x=vx;
                     car1.vel.z=vz;
+                }else{
+                    return;
                 }
-                if(p.x!=null&&p.z!=null&&p.y!=null){
+                if(checkNumber(np.x)&&
+                   checkNumber(np.z)&&
+                   checkNumber(np.y)){
                     car1.pos.x=p.x;
                     car1.pos.y=p.y;
                     car1.pos.z=p.z;
+                }else{
+                    return;
                 }
-                car1.rot=r;
-                car1.acc=a;
-                car1.goal=request.body.goal;
-                if(spin!=null){
+                if(checkNumber(r)&&
+                   checkNumber(a)){
+                    car1.rot=r;
+                    car1.acc=a;
+                }else{
+                    return;
+                }
+                if(request.body.goal==null||
+                  checkNumber(request.body.goal)){
+                    car1.goal=request.body.goal;
+                }else{
+                    return;
+                }
+                if(spin!=null||checkNumber(spin)){
                     car1.spin=spin;
                 }
                 cars[c]=car1;
@@ -175,3 +192,11 @@ app.listen(app.get('port'), function () {
     console.log('Node app is running on port', app.get('port'));
     waitState();
 });
+function checkNumber(str){
+    if(str==null)
+        return false;
+    var k=Number(str+"");
+    if(isNaN(k)||(!isFinite(k)))
+        return false;
+    return true;
+}

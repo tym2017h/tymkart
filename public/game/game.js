@@ -19,14 +19,16 @@ var sun=0xbbbb88;
 var camera = new THREE.PerspectiveCamera();
 
 var fieldItems=[
-    new Item(0,0,280)
+    
 ];
 
-function Item(x,y,z){
-    this.id=0;
+function Item(x,y,z,id,mesh){
+    this.id=id;
     this.p={x:x,y:y,z:z};
     this.cp=0;
     this.uuid=Math.random();
+    this.mesh=mesh;
+    this.size=0.5;
 }
 
 camera.aspect=width/height;
@@ -296,6 +298,8 @@ function timer(){
             player.acc=0;
         }
         player.physics(dt,true);
+        console.log(player.item);
+        //setItemBackground(player.item);
     }else{
         player.acc=0;
     }
@@ -379,6 +383,9 @@ function additemBox(x,y,z){
     mesh.position.x=x;
     mesh.position.y=y;
     mesh.position.z=z;
+    var i=new Item(x,y,z,1,mesh);
+    i.size=1.4;
+    fieldItems.push(i);
     scene.add( mesh );
 }
 function addcube(x,y,z){
@@ -400,5 +407,20 @@ function addlongcube(x,y,z,sx,sy,sz){
     mesh.position.z=z;
     scene.add( mesh );
     targetList.push(mesh);
+}
+function removeItem(uuid)
+{
+    var index=0;
+    for(var i=0;i<fieldItems.length;i++){
+        if(uuid==fieldItems[i].uuid){
+            index=i;
+            break;
+        }
+        if(i==fieldItems.length-1){
+            return;
+        }
+    }
+    scene.remove(fieldItems[index].mesh);
+    fieldItems.splice(index, 1);
 }
 // render
