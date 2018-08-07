@@ -252,6 +252,9 @@ function timer(){
             this.staticId=staticId;
         }
         sentRemoved=[];
+        if(removedItems.length!=0){
+            console.log(removedItems);
+        }
         for(var i=0;i<removedItems.length;i++){
             var o=removedItems[i];
             sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
@@ -309,9 +312,9 @@ function timer(){
                 }
             }
             
-            console.log(onlineArr);
-            console.log(fieldArr);
-            console.log(sentRemoved);
+            //console.log(onlineArr);
+            //console.log(fieldArr);
+            //console.log(sentRemoved);
             
             for(var i=0;i<onlineArr.length;i++){
                 if(onlineArr[i])continue;
