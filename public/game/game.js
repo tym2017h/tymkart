@@ -297,7 +297,7 @@ function timer(){
             var onlineArr=new Array(onlineItems.length);
             var fieldArr=new Array(fieldItems.length);
             for(var i=0;i<onlineItems.length;i++){
-                for(var j=0;j<fieldItems.length;i++){
+                for(var j=0;j<fieldItems.length;j++){
                     console.log(i);
                     console.log(onlineItems[i]);
                     console.log(fieldItems[j]);
