@@ -298,6 +298,9 @@ function timer(){
             var fieldArr=new Array(fieldItems.length);
             for(var i=0;i<onlineItems.length;i++){
                 for(var j=0;j<fieldItems.length;i++){
+                    console.log(i);
+                    console.log(onlineItems[i]);
+                    console.log(fieldItems[j]);
                     if(onlineItems[i].uuid==fieldItems[j].uuid){
                         onlineArr[i]=true;
                         fieldArr[j]=true;
