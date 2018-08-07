@@ -167,8 +167,8 @@ var Car=function(){
                     this.spin=1;
                     break;
                 case 1:
-                    if(this.item!=0)
-                        this.item=Math.floor(Math.random()*2)+2;
+                    if(this.item==0)
+                        this.item=Math.floor(Math.random()*1)+2;
                     break;
             }
             removeItem(collidedItems[i].uuid);

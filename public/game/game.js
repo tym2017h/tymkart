@@ -299,7 +299,8 @@ function timer(){
         }
         player.physics(dt,true);
         console.log(player.item);
-        //setItemBackground(player.item);
+        setItemBackground(player.item);
+        
     }else{
         player.acc=0;
     }

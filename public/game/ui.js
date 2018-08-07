@@ -1,6 +1,8 @@
 //ui
-var linearGrad="linear-gradient(to right, rgba(0,0,130,0.8),rgba(0,0,130,0.7),rgba(0,0,130,0.8))";
-var tdStyle="background:"+linearGrad+";border:10px;";
+var linearGrad="linear-gradient(to right, rgba(30,30,30,0.8),rgba(30,30,30,0.7),rgba(30,30,30,0.8))";
+var tdStyle="background:"+linearGrad+";border:10px;"+"font-size:30px;";
+var linearGrad2="linear-gradient(to top, rgba(240,240,30,0.8),rgba(30,30,30,0.7),rgba(30,30,30,0.7),rgba(240,240,30,0.8))";
+var tdStyle2="background:"+linearGrad2+";border:10px;color:#fff;"+"font-size:30px;";
 var count=document.createElement("div");
 count.style.position="absolute";
 count.style.width=window.innerWidth+"px";
@@ -113,14 +115,14 @@ var itemtextures=[
     "",
     "",
     "textures/toyama.gif",
-    "textures/right.png",
+    "textures/right.png"
 ];
 
 var itemButton=document.createElement("div");
 itemButton.style.position="absolute";
 itemButton.style.zIndex="1";
 itemButton.style.color="white";
-itemButton.style.top= (window.innerHeight*0.9)+"px";
+itemButton.style.top= (window.innerHeight-(window.innerWidth*0.1))+"px";
 itemButton.style.left=(window.innerWidth*0.45)+"px";
 itemButton.style.height=(window.innerWidth*0.1)+"px";
 itemButton.style.width=(window.innerWidth*0.1)+"px";
@@ -129,6 +131,8 @@ document.body.appendChild(itemButton);
 itemButton.appendChild(itemImg);
 
 function setItemBackground(srcId){
+    //if(srcId>=itemtextures.length)
+    //    return;
     var target="url('"+itemtextures[srcId]+"')";
     if(itemImg.style.backgroundImage!=target)  itemImg.style.backgroundImage=target;
 }
@@ -259,7 +263,12 @@ function ui(){
             //contentArr1.push(["test"+i,"aaa"]);
         }
         for(var i=0;i<contentArr1.length;i++){
-            tabletxt+="<tr><td style='"+tdStyle+"'>"+contentArr1[i][0]+"</td>"+"<td style='"+tdStyle+"'>"+contentArr1[i][1]+"</td></tr>"
+            var st=tdStyle;
+            if(contentArr1[i][0]=="YOU"){
+                st=tdStyle2;
+            }
+            tabletxt+="<tr><td style='"+st+"'>"+contentArr1[i][0]+"</td>"+"<td style='"+st+"'>"+contentArr1[i][1]+"</td></tr>";
+            
         }
         if(tabletxt!=tabletxt1){
             //console.log(resultTable.innerHTML);
