@@ -259,6 +259,8 @@ function timer(){
             console.log(removedItems);
             console.log(sentRemoved);
         }
+        addedItems=[];
+        removedItems=[];
         var sentAdded=[];
         for(var i=0;i<addedItems.length;i++){
             var o=addedItems[i];
@@ -335,8 +337,6 @@ function timer(){
             for(var i=0;i<removeuuids.length;i++){
                 removeItemNoServer(removeuuids[i]);
             }
-            addedItems=[];
-            removedItems=[];
             netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
                 "<br>pos:"+Math.floor(player.pos.x)+","
                 +Math.floor(player.pos.z);
@@ -546,12 +546,12 @@ function removeItem(uuid)
         if(uuid==fieldItems[i].uuid){
             index=i;
             break;
-        }
-        if(i==fieldItems.length-1){
+        }else if(i==fieldItems.length-1){
             return;
         }
     }
     removedItems.push(fieldItems[index]);
+    console.log("removeItem("+uuid+")");
     scene.remove(fieldItems[index].mesh);
     fieldItems.splice(index, 1);
 }
