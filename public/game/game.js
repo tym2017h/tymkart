@@ -258,7 +258,7 @@ function timer(){
         var sentAdded=[];
         for(var i=0;i<addedItems.length;i++){
             var o=addedItems[i];
-            sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+            sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
         }
         d.added=sentAdded;
         d.removed=sentRemoved;
@@ -322,7 +322,7 @@ function timer(){
                 removeuuids.push(fieldItems[i].uuid);
             }
             for(var i=0;i<removeuuids.length;i++){
-                removeItem(removeuuids[i]);
+                removeItemNoServer(removeuuids[i]);
             }
             addedItems=[];
             removedItems=[];
@@ -541,6 +541,21 @@ function removeItem(uuid)
         }
     }
     removedItems.push(fieldItems[index]);
+    scene.remove(fieldItems[index].mesh);
+    fieldItems.splice(index, 1);
+}
+function removeItemNoServer(uuid)
+{
+    var index=0;
+    for(var i=0;i<fieldItems.length;i++){
+        if(uuid==fieldItems[i].uuid){
+            index=i;
+            break;
+        }
+        if(i==fieldItems.length-1){
+            return;
+        }
+    }
     scene.remove(fieldItems[index].mesh);
     fieldItems.splice(index, 1);
 }
