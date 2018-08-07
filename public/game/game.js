@@ -298,9 +298,9 @@ function timer(){
             var fieldArr=new Array(fieldItems.length);
             for(var i=0;i<onlineItems.length;i++){
                 for(var j=0;j<fieldItems.length;j++){
-                    console.log(i);
-                    console.log(onlineItems[i]);
-                    console.log(fieldItems[j]);
+                    //console.log(i);
+                    //console.log(onlineItems[i]);
+                    //console.log(fieldItems[j]);
                     if(onlineItems[i].uuid==fieldItems[j].uuid){
                         onlineArr[i]=true;
                         fieldArr[j]=true;
@@ -310,7 +310,7 @@ function timer(){
             console.log(onlineArr);
             
             for(var i=0;i<onlineArr.length;i++){
-                if(onlineArr[i])return;
+                if(onlineArr[i])continue;
                 var _item=onlineItems[i];
                 var realItem=new Item(_item.p.x,_item.p.y,_item.p.z,_item.id);
                 realItem.uuid=_item.uuid;
@@ -321,7 +321,7 @@ function timer(){
             }
             var removeuuids=[];
             for(var i=0;i<fieldArr.length;i++){
-                if(fieldArr[i])return;
+                if(fieldArr[i])continue;
                 removeuuids.push(fieldItems[i].uuid);
             }
             for(var i=0;i<removeuuids.length;i++){
