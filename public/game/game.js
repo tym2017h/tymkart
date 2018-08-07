@@ -293,6 +293,7 @@ function timer(){
                 }
             }
             var onlineItems=p.items;
+            console.log(p.items);
             var onlineArr=new Array(onlineItems.length);
             var fieldArr=new Array(fieldItems.length);
             for(var i=0;i<onlineItems.length;i++){
@@ -303,6 +304,7 @@ function timer(){
                     }
                 }
             }
+            console.log(onlineArr);
             
             for(var i=0;i<onlineArr.length;i++){
                 if(onlineArr[i])return;
@@ -367,7 +369,7 @@ function timer(){
             additem(player.pos.x+Math.sin(player.rot)*2*k,player.pos.y,player.pos.z+Math.cos(player.rot)*2*k,player.item);
             player.item=0;
         }
-        console.log(player.item);
+        //console.log(player.item);
         setItemBackground(player.item);
 
     }else{
