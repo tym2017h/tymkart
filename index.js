@@ -255,6 +255,9 @@ app.post('/setpos', function (request, response) {
             if(items.length<500)
                 items.push(_item);
         }
+        if(removed.length!=0){
+            console.log("removed.length!=0");
+        }
         for(var i=0;i<removed.length;i++){
             var _uuid=removed[i].uuid;
             var matched=-1;
@@ -265,16 +268,17 @@ app.post('/setpos', function (request, response) {
                 }
             }
             if(matched>=0){
+                console.log("item removed:"+matched);
                 items.splice(matched,1);
             }
         }
     }
-    console.log(request.body.removed);
+    //console.log(request.body.removed);
     var rr=JSON.stringify({
         cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
         time:new Date().getTime(),
         items:items});
-    console.log(rr);
+    //console.log(rr);
     response.send(rr);
 });
 app.listen(app.get('port'), function () {

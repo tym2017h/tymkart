@@ -252,12 +252,13 @@ function timer(){
             this.staticId=staticId;
         }
         sentRemoved=[];
-        if(removedItems.length!=0){
-            console.log(removedItems);
-        }
         for(var i=0;i<removedItems.length;i++){
             var o=removedItems[i];
             sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+        }
+        if(removedItems.length!=0){
+            console.log(removedItems);
+            console.log(sentRemoved);
         }
         var sentAdded=[];
         for(var i=0;i<addedItems.length;i++){
