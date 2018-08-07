@@ -259,13 +259,13 @@ function timer(){
             console.log(removedItems);
             console.log(sentRemoved);
         }
-        addedItems=[];
-        removedItems=[];
         var sentAdded=[];
         for(var i=0;i<addedItems.length;i++){
             var o=addedItems[i];
             sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
         }
+        addedItems=[];
+        removedItems=[];
         d.added=sentAdded;
         d.removed=sentRemoved;
         console.log(d);
