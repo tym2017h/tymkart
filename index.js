@@ -18,7 +18,16 @@ var car=function(){
     this.spin=0;
     cidgen++;
 };
+function Item(){
+    this.id=0;
+    this.p={x:0,y:0,z:0};
+    this.cp=0;
+    this.uuid=0;
+    this.target=0;
+    this.staticId=-1;
+}
 var cars=[];
+var items=[];
 var lastConnection=0;
 var stage=0;
 //     start     end       next
@@ -47,6 +56,7 @@ function waitState(){
 //next<time
 function switchState(){
     cars=[];
+    items=[];
     stage=Math.floor(Math.random()*100);
     var time=new Date().getTime();
     gameid++;
@@ -194,11 +204,69 @@ app.post('/setpos', function (request, response) {
             }
         }catch(e){}
     }else{
-
         console.log("f");
     }
-    var rr=JSON.stringify({cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
-                           time:new Date().getTime()});
+    if(request.body.added!=null&&
+       Array.isArray(request.body.added)&&
+       request.body.removed!=null&&
+       Array.isArray(request.body.removed)){
+        var added=request.body.added;
+        var removed=request.body.removed;
+        for(var i=0;i<added.length;i++){
+            var sentItem=added[i];
+            var exists=false;
+            var _id=sentItem.id;
+            if(!checkNumber(_id))return;
+            var _p=sentItem.p;
+            if(_p==null||
+               (!checkNumber(_p.x))||
+               (!checkNumber(_p.y))||
+               (!checkNumber(_p.z)))return;
+            var _cp=sentItem.cp;
+            if(!checkNumber(_cp))return;
+            var _uuid=sentItem.uuid;
+            if(!checkNumber(_uuid))return;
+            var _target=sentItem.target;
+            if(!checkNumber(_target))return;
+            var _staticId=sentItem.staticId;
+            if(!checkNumber(_staticId))return;
+            var _item=new Item();
+            if(_staticId>=0){
+                for(var j=0;j<items.length;j++){
+                    if(items[j].staticId==_staticId){
+                        exists=true;
+                        break;
+                    }
+                }
+            }
+            if(exists)continue;
+            _item.id=_id;
+            _item.p={x:_p.x,y:_p.y,z:_p.z};
+            _item.cp=_cp;
+            _item.uuid=_uuid;
+            _item.target=_target;
+            _item.staticId=_staticId;
+            if(items.length<500)
+                items.push(_item);
+        }
+        for(var i=0;i<removed.length;i++){
+            var _uuid=removed[i].uuid;
+            var matched=-1;
+            for(var j=0;j<items.length;j++){
+                if(items[j].uuid==_uuid){
+                    matched=j;
+                    break;
+                }
+            }
+            if(matched>=0){
+                items.splice(matched,1);
+            }
+        }
+    }
+    var rr=JSON.stringify({
+        cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
+        time:new Date().getTime(),
+        items:items});
     //console.log(rr);
     response.send(rr);
 });

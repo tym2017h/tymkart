@@ -18,10 +18,12 @@ var ambient=0x444477;
 var sun=0xbbbb88;
 var camera = new THREE.PerspectiveCamera();
 var frontPlayer=-1;
+var staticItemId=0;
 var fieldItems=[
 
 ];
-
+var addedItems=[];
+var removedItems=[];
 function Item(x,y,z,id,mesh){
     this.id=id;
     this.p={x:x,y:y,z:z};
@@ -30,6 +32,11 @@ function Item(x,y,z,id,mesh){
     this.mesh=mesh;
     this.size=0.5;
     this.target=0;
+    this.staticId=-1;
+    this.setStatic=function(){
+        this.staticId=staticItemId;
+        staticItemId++;
+    }
 }
 
 camera.aspect=width/height;
@@ -235,7 +242,28 @@ function timer(){
         d.acc=player.acc;
         d.goal=player.goal;
         d.spin=player.spin;
+        function tmpItem(p,id,cp,uuid,target,staticId){
+            this.p=p;
+            this.id=id;
+            this.cp=cp;
+            this.uuid=uuid;
+            this.target=target;
+            this.staticId=staticId;
+        }
+        var sentRemoved=[];
+        for(var i=0;i<removedItems.length;i++){
+            var o=removedItems[i];
+            sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+        }
+        var sentAdded=[];
+        for(var i=0;i<addedItems.length;i++){
+            var o=addedItems[i];
+            sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+        }
+        d.added=sentAdded;
+        d.removed=sentRemoved;
         senttime=timenow;
+        
         dopost(JSON.stringify(d),"/setpos",function(res){
             lag=new Date().getTime()- senttime;
             sent=false; 
@@ -264,6 +292,36 @@ function timer(){
                     player.audience=true;
                 }
             }
+            var onlineItems=res.items;
+            var onlineArr=new Array(onlineItems.length);
+            var fieldArr=new Array(fieldItems.length);
+            for(var i=0;i<onlineItems.length;i++){
+                for(var j=0;j<fieldItems.length;i++){
+                    if(onlineItems[i].uuid==fieldItems[j].uuid){
+                        onlineArr[i]=true;
+                        fieldArr[j]=true;
+                    }
+                }
+            }
+            for(var i=0;i<onlineArr.length;i++){
+                if(onlineArr[i])return;
+                var _item=onlineItems[i];
+                var realItem=new Item(_item.p.x,_item.p.y,_item.p.z,_item.id);
+                realItem.uuid=_item.uuid;
+                realItem.mesh=generateMeshForItem(_item.p.x,_item.p.y,_item.p.z,_item.id);
+                realItem.staticId=_item.staticId;
+                fieldItems.push(realItem);
+            }
+            var removeuuids=[];
+            for(var i=0;i<fieldArr.length;i++){
+                if(fieldArr[i])return;
+                removeuuids.push(fieldItems[i].uuid);
+            }
+            for(var i=0;i<removeuuids.length;i++){
+                removeItem(removeuuids[i]);
+            }
+            addedItems=[];
+            removedItems=[];
             netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
                 "<br>pos:"+Math.floor(player.pos.x)+","
                 +Math.floor(player.pos.z);
@@ -338,19 +396,19 @@ function timer(){
             order++;
             if(oacp<leastACp){
                 leastACp=oacp;
-                frontPlayer=i;
+                frontPlayer=othercar[i].cid;
                 maximumDsq=0;
             }
         }else if(oacp==pacp&&othercar[i].dsq<player.dsq){
             leastACp=oacp;
             if(othercar[i].dsq>maximumDsq){
-                frontPlayer=i;
+                frontPlayer=othercar[i].cid;
                 maximumDsq=othercar[i].dsq;
             }
             order++;
         }/*else if(othercar[i].lap>player.lap){
             order++;
-            
+
         }else if(othercar[i].cp>player.cp){
             order++;
         }*/
@@ -405,37 +463,46 @@ function check()
     }
 }
 
-function additem(x,y,z,id){
+function generateMeshForItem(x,y,z,id){
     var geometry = new THREE.CubeGeometry(2, 2,2);
     var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
     var mesh = new THREE.Mesh( geometry, material );
-    itemBox.push({x:x,z:z});
     mesh.position.x=-x;
     mesh.position.y=y;
     mesh.position.z=z;
+    scene.add( mesh );
+    return mesh;
+}
+function additem(x,y,z,id){/*
+    var geometry = new THREE.CubeGeometry(2, 2,2);
+    var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
+    var mesh = new THREE.Mesh( geometry, material );*/
+    var mesh=generateMeshForItem(x,y,z,1);
     var item=new Item(x,y,z,id,mesh);
     item.size=1.4;
     if(id==3){
         item.target=-1;
-        for(var i=0;i<othercar.length;i++){
-            
+        if(frontPlayer>=0){
+            item.target=frontPlayer;
         }
     }
     fieldItems.push(item);
-    scene.add( mesh );
+    addedItems.push(item);
+    //scene.add( mesh );
 }
 function additemBox(x,y,z){
+    /*
     var geometry = new THREE.CubeGeometry(2, 2,2);
-    var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
-    var mesh = new THREE.Mesh( geometry, material );
-    itemBox.push({x:x,z:z});
-    mesh.position.x=-x;
-    mesh.position.y=y;
-    mesh.position.z=z;
+    var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );*/
+    //var mesh = new THREE.Mesh( geometry, material );
+    var mesh=generateMeshForItem(x,y,z,1);
+    //itemBox.push({x:x,z:z});
     var i=new Item(x,y,z,1,mesh);
     i.size=1.4;
+    i.setStatic();
     fieldItems.push(i);
-    scene.add( mesh );
+    addedItems.push(i);
+    //scene.add( mesh );
 }
 function addcube(x,y,z){
     var geometry = new THREE.CubeGeometry(2, 2, 2);
@@ -469,6 +536,7 @@ function removeItem(uuid)
             return;
         }
     }
+    removedItems.push(fieldItems[index]);
     scene.remove(fieldItems[index].mesh);
     fieldItems.splice(index, 1);
 }
