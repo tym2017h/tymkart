@@ -207,6 +207,7 @@ console.log(player.pos);
 var firststate=null;
 var rawstate=state;
 var sent_state=false;
+var sentRemoved=[];
 function timer(){
     if(loadstats>0){
         if(neutralTime>end){
@@ -255,7 +256,7 @@ function timer(){
             var o=removedItems[i];
             sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
         }
-        var sentAdded=[];
+        sentAdded=[];
         for(var i=0;i<addedItems.length;i++){
             var o=addedItems[i];
             sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
@@ -309,6 +310,7 @@ function timer(){
             }
             console.log(onlineArr);
             console.log(fieldArr);
+            console.log(sentRemoved);
             
             for(var i=0;i<onlineArr.length;i++){
                 if(onlineArr[i])continue;
