@@ -308,6 +308,7 @@ function timer(){
                 }
             }
             console.log(onlineArr);
+            console.log(fieldArr);
             
             for(var i=0;i<onlineArr.length;i++){
                 if(onlineArr[i])continue;
