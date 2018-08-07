@@ -237,6 +237,10 @@ app.post('/setpos', function (request, response) {
                         exists=true;
                         break;
                     }
+                    if(items[j].uuid==_uuid){
+                        exists=true;
+                        break;
+                    }
                 }
             }
             if(exists)continue;
