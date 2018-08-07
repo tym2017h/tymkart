@@ -114,8 +114,8 @@ itemImg.style.backgroundSize="cover";
 var itemtextures=[
     "",
     "",
-    "textures/toyama.gif",
-    "textures/right.png"
+    "textures/right.png",
+    "textures/toyama.gif"
 ];
 
 var itemButton=document.createElement("div");
@@ -137,7 +137,7 @@ function setItemBackground(srcId){
     if(itemImg.style.backgroundImage!=target)  itemImg.style.backgroundImage=target;
 }
 function ui(){
-    var laptxt=state+" ";
+    var laptxt=frontPlayer+" "+state+" ";
 
     if(state=="result"||player.goal){
         if(dialogdiv.style.visibility!="visible")

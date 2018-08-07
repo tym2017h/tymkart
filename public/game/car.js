@@ -168,7 +168,7 @@ var Car=function(){
                     break;
                 case 1:
                     if(this.item==0)
-                        this.item=Math.floor(Math.random()*1)+2;
+                        this.item=Math.round(Math.random()*1)+2;
                     break;
             }
             removeItem(collidedItems[i].uuid);
@@ -228,10 +228,4 @@ var Car=function(){
     }
     this.goal=null;
     this.dsq=Infinity;
-    function XYZDistance(v1,v2){
-        return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z)+(v1.y-v2.y)*(v1.y-v2.y))
-    }
-    function XZDistance(v1,v2){
-        return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z))
-    }
 };

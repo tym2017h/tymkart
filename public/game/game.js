@@ -17,9 +17,9 @@ var projector = new THREE.Projector();
 var ambient=0x444477;
 var sun=0xbbbb88;
 var camera = new THREE.PerspectiveCamera();
-
+var frontPlayer=-1;
 var fieldItems=[
-    
+
 ];
 
 function Item(x,y,z,id,mesh){
@@ -29,6 +29,7 @@ function Item(x,y,z,id,mesh){
     this.uuid=Math.random();
     this.mesh=mesh;
     this.size=0.5;
+    this.target=0;
 }
 
 camera.aspect=width/height;
@@ -298,14 +299,25 @@ function timer(){
             player.acc=0;
         }
         player.physics(dt,true);
+        if(keysPress[32]&&player.item!=0){
+            var k=-1;
+            if(player.item==3){
+                k=1;
+            }
+            additem(player.pos.x+Math.sin(player.rot)*2*k,player.pos.y,player.pos.z+Math.cos(player.rot)*2*k,player.item);
+            player.item=0;
+        }
         console.log(player.item);
         setItemBackground(player.item);
-        
+
     }else{
         player.acc=0;
     }
     player.updateMesh();
     order=0;
+    var leastACp=Infinity;//absolute cp
+    var maximumDsq=0;
+    frontPlayer=-1;
     for(var i=0;i<othercar.length;i++){
         if(othercar[i].cid==player.cid)continue;
         if(state=="race"){
@@ -315,17 +327,33 @@ function timer(){
             othercar[i].reset();
         }
         othercar[i].updateMesh();
-        if(othercar[i].audience){
+        //if(othercar[i].audience){
+        //    order++;
+        //}else 
+        var oacp=othercar[i].cp+othercar[i].lap*cp.length;
+        var pacp=player.cp+player.lap*cp.length;
+        if(othercar[i].goal!=null&&player.goal==null){
             order++;
-        }else if(othercar[i].goal!=null&&player.goal==null){
+        }else if(oacp>pacp){
             order++;
-        }else if(othercar[i].lap>player.lap){
+            if(oacp<leastACp){
+                leastACp=oacp;
+                frontPlayer=i;
+                maximumDsq=0;
+            }
+        }else if(oacp==pacp&&othercar[i].dsq<player.dsq){
+            leastACp=oacp;
+            if(othercar[i].dsq>maximumDsq){
+                frontPlayer=i;
+                maximumDsq=othercar[i].dsq;
+            }
             order++;
+        }/*else if(othercar[i].lap>player.lap){
+            order++;
+            
         }else if(othercar[i].cp>player.cp){
             order++;
-        }else if(othercar[i].cp==player.cp&&othercar[i].dsq<player.dsq){
-            order++;
-        }
+        }*/
     }
     if(player.mesh!=null){
         camera.position.x=player.mesh.position.x-Math.sin(player.rot)*12;
@@ -376,12 +404,32 @@ function check()
         setTimeout(check,100);
     }
 }
+
+function additem(x,y,z,id){
+    var geometry = new THREE.CubeGeometry(2, 2,2);
+    var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
+    var mesh = new THREE.Mesh( geometry, material );
+    itemBox.push({x:x,z:z});
+    mesh.position.x=-x;
+    mesh.position.y=y;
+    mesh.position.z=z;
+    var item=new Item(x,y,z,id,mesh);
+    item.size=1.4;
+    if(id==3){
+        item.target=-1;
+        for(var i=0;i<othercar.length;i++){
+            
+        }
+    }
+    fieldItems.push(item);
+    scene.add( mesh );
+}
 function additemBox(x,y,z){
     var geometry = new THREE.CubeGeometry(2, 2,2);
     var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
     var mesh = new THREE.Mesh( geometry, material );
     itemBox.push({x:x,z:z});
-    mesh.position.x=x;
+    mesh.position.x=-x;
     mesh.position.y=y;
     mesh.position.z=z;
     var i=new Item(x,y,z,1,mesh);
@@ -425,3 +473,9 @@ function removeItem(uuid)
     fieldItems.splice(index, 1);
 }
 // render
+function XYZDistance(v1,v2){
+    return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z)+(v1.y-v2.y)*(v1.y-v2.y))
+}
+function XZDistance(v1,v2){
+    return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z))
+}
