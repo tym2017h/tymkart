@@ -207,7 +207,6 @@ console.log(player.pos);
 var firststate=null;
 var rawstate=state;
 var sent_state=false;
-var sentRemoved=[];
 function timer(){
     if(loadstats>0){
         if(neutralTime>end){
@@ -251,7 +250,7 @@ function timer(){
             this.target=target;
             this.staticId=staticId;
         }
-        sentRemoved=[];
+        var sentRemoved=[];
         for(var i=0;i<removedItems.length;i++){
             var o=removedItems[i];
             sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
@@ -267,6 +266,7 @@ function timer(){
         }
         d.added=sentAdded;
         d.removed=sentRemoved;
+        console.log(d);
         senttime=timenow;
         
         dopost(JSON.stringify(d),"/setpos",function(res){

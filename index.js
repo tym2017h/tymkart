@@ -111,7 +111,7 @@ function getcarindex(cid){
     return null;
 };
 app.post('/setpos', function (request, response) {
-    console.log(request.body);
+    //console.log(request.body);
     var time=new Date().getTime();
     if(time>next){
         switchState();
@@ -122,8 +122,8 @@ app.post('/setpos', function (request, response) {
     } else {
         state="wait";
     }
-    console.log(state);
-    console.log("last connection:"+(time-lastConnection));
+    //console.log(state);
+    //console.log("last connection:"+(time-lastConnection));
     if(end-time>30000&&state=="race"){
         var g=false;
         for(var i=0;i<cars.length;i++){
@@ -141,7 +141,7 @@ app.post('/setpos', function (request, response) {
         response.send(JSON.stringify(cars));
    */
     lastConnection=time;
-    console.log("aaa"+checkNumber(10));
+    //console.log("aaa"+checkNumber(10));
     if(request.body.rot!=null&&request.body.pos!=null&&
        checkNumber(request.body.cid)&&request.body.acc!=null&&
        request.body.vel!=null){
@@ -210,6 +210,9 @@ app.post('/setpos', function (request, response) {
        Array.isArray(request.body.added)&&
        request.body.removed!=null&&
        Array.isArray(request.body.removed)){
+        if(request.body.removed.length>0){
+            console.log(request.body);
+        }
         var added=request.body.added;
         var removed=request.body.removed;
         for(var i=0;i<added.length;i++){
