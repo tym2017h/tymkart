@@ -263,11 +263,12 @@ app.post('/setpos', function (request, response) {
             }
         }
     }
+    console.log(request.body.removed);
     var rr=JSON.stringify({
         cars:cars,state:(state),start:start,end:end,next:next,gameid:gameid,
         time:new Date().getTime(),
         items:items});
-    //console.log(rr);
+    console.log(rr);
     response.send(rr);
 });
 app.listen(app.get('port'), function () {
