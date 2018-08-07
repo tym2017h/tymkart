@@ -251,12 +251,12 @@ function timer(){
             this.target=target;
             this.staticId=staticId;
         }
-        var sentRemoved=[];
+        sentRemoved=[];
         for(var i=0;i<removedItems.length;i++){
             var o=removedItems[i];
             sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
         }
-        sentAdded=[];
+        var sentAdded=[];
         for(var i=0;i<addedItems.length;i++){
             var o=addedItems[i];
             sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
@@ -308,6 +308,7 @@ function timer(){
                     }
                 }
             }
+            
             console.log(onlineArr);
             console.log(fieldArr);
             console.log(sentRemoved);
