@@ -154,25 +154,27 @@ var Car=function(){
         this.pos.z+=this.vel.z*dt;
 
         this.boost-=dt;
-        var collidedItems=[];
-        for(var i=0;i<fieldItems.length;i++){
-            if(XYZDistance(fieldItems[i].p,this.pos)<0.5+fieldItems[i].size){
-                collidedItems.push(fieldItems[i]);
+        if(isplayer){
+            var collidedItems=[];
+            for(var i=0;i<fieldItems.length;i++){
+                if(XYZDistance(fieldItems[i].p,this.pos)<0.5+fieldItems[i].size){
+                    collidedItems.push(fieldItems[i]);
+                }
             }
-        }
-        for(var i=0;i<collidedItems.length;i++){
-            switch(collidedItems[i].id){
-                case 2:
-                case 3:
-                    this.spin=1;
-                    break;
-                case 1:
-                    if(this.item==0)
-                        this.item=Math.round(Math.random()*1)+2;
-                    break;
+            for(var i=0;i<collidedItems.length;i++){
+                switch(collidedItems[i].id){
+                    case 2:
+                    case 3:
+                        this.spin=1;
+                        break;
+                    case 1:
+                        if(this.item==0)
+                            this.item=Math.round(Math.random()*1)+2;
+                        break;
+                }
+                removeItem(collidedItems[i].uuid);
+                //removeItem(collidedItemsId[i]);
             }
-            removeItem(collidedItems[i].uuid);
-            //removeItem(collidedItemsId[i]);
         }
         if(this.spin<=0){
             this.effectRot=0;

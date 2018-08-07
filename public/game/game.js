@@ -303,6 +303,7 @@ function timer(){
                     }
                 }
             }
+            
             for(var i=0;i<onlineArr.length;i++){
                 if(onlineArr[i])return;
                 var _item=onlineItems[i];
@@ -311,6 +312,7 @@ function timer(){
                 realItem.mesh=generateMeshForItem(_item.p.x,_item.p.y,_item.p.z,_item.id);
                 realItem.staticId=_item.staticId;
                 fieldItems.push(realItem);
+                console.log(realItem);
             }
             var removeuuids=[];
             for(var i=0;i<fieldArr.length;i++){
