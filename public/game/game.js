@@ -292,7 +292,7 @@ function timer(){
                     player.audience=true;
                 }
             }
-            var onlineItems=res.items;
+            var onlineItems=p.items;
             var onlineArr=new Array(onlineItems.length);
             var fieldArr=new Array(fieldItems.length);
             for(var i=0;i<onlineItems.length;i++){
