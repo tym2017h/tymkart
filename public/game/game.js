@@ -323,6 +323,9 @@ function timer(){
         
         for(var i=0;i<fieldItems.length;i++){
             var o=fieldItems[i];
+            if(o.id!==1){
+                console.log(o);
+            }
             if(o.updated){
                 sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,o.owner));
             }
@@ -338,10 +341,10 @@ function timer(){
         d.removed=sentRemoved;
         console.log(d);
         senttime=timenow;
+        sent=true;
 
         dopost(JSON.stringify(d),"/setpos",function(res){
             lag=new Date().getTime()- senttime;
-            sent=false; 
             if(res=="nocar"){
                 //if(rawstate=="result")rawstate="wait";
                 if(creatingcar)return;
@@ -402,6 +405,9 @@ function timer(){
             for(var i=0;i<fieldArr.length;i++){
                 if(fieldArr[i])continue;
                 removeuuids.push(fieldItems[i].uuid);
+                if(fieldItems[i]>1){
+                    console.log("item removed");
+                }
             }
             for(var i=0;i<removeuuids.length;i++){
                 console.log("removeItemNoServer:"+removeuuids[i]);
@@ -410,8 +416,8 @@ function timer(){
             netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
                 "<br>pos:"+Math.floor(player.pos.x)+","
                 +Math.floor(player.pos.z);
+            sent=false; 
         });
-        sent=true;
     }
 
     //netdiv.innerHTML=            "<br>pos:"+Math.floor(player.pos.x)+","            +Math.floor(player.pos.z);
