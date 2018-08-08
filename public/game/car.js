@@ -161,10 +161,15 @@ var Car=function(){
                     collidedItems.push(fieldItems[i]);
                 }
             }
+            
             for(var i=0;i<collidedItems.length;i++){
                 switch(collidedItems[i].id){
-                    case 2:
                     case 3:
+                       if(collidedItems[i].target>0&&
+                         collidedItems[i].target!=player.cid){
+                           continue;
+                       } 
+                    case 2:
                         this.spin=1;
                         break;
                     case 1:

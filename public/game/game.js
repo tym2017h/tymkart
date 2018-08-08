@@ -300,6 +300,10 @@ function timer(){
                     if(onlineItems[i].uuid==fieldItems[j].uuid){
                         onlineArr[i]=true;
                         fieldArr[j]=true;
+                        if(onlineItems[i].owner!=player.cid){
+                            fieldItems[j].pos=onlineItems[i].p;  fieldItems[j].cp=onlineItems[i].cp;  fieldItems[j].target=onlineItems[i].target;
+                            
+                        }
                     }
                 }
             }
@@ -309,7 +313,10 @@ function timer(){
             //console.log(sentRemoved);
 
             for(var i=0;i<onlineArr.length;i++){
-                if(onlineArr[i])continue;
+                if(onlineArr[i]){
+                    
+                    continue;
+                }
                 var _item=onlineItems[i];
                 var realItem=new Item(_item.p.x,_item.p.y,_item.p.z,_item.id);
                 realItem.uuid=_item.uuid;
