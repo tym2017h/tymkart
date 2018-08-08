@@ -1,41 +1,41 @@
 var stages=[
     {
         path:"jsonmodel/tym2.json",
-     cp:[
-    {x:0,z:0},
-    {x:0,z:280},
-    {x:-80,z:384},
-    {x:0,z:448},
-    {x:248,z:434},//-62 -108
-    {x:320,z:364},
-    {x:226,z:260},//-56.5 -57.5
-    {x:220,z:36},
-    {x:184,z:-32},
-    {x:40,z:-36},
-    {x:-52,z:-84},//13 21
-    {x:-92,z:-40},//23 10
-    {x:-60,z:-8},//15 2
-    {x:-16,z:-22},//4 5.6
-    {x:0,z:0}
-]},{
-        path:"tyminside/tym3.json",
-     cp:[
-    {x:0,z:0},
-    {x:0,z:280},
-    {x:-80,z:384},
-    {x:0,z:448},
-    {x:248,z:434},//-62 -108
-    {x:320,z:364},
-    {x:226,z:260},//-56.5 -57.5
-    {x:220,z:36},
-    {x:184,z:-32},
-    {x:40,z:-36},
-    {x:-52,z:-84},//13 21
-    {x:-92,z:-40},//23 10
-    {x:-60,z:-8},//15 2
-    {x:-16,z:-22},//4 5.6
-    {x:0,z:0}
-]}
+        cp:[
+            {x:0,z:0},
+            {x:0,z:280},
+            {x:-80,z:384},
+            {x:0,z:448},
+            {x:248,z:434},//-62 -108
+            {x:320,z:364},
+            {x:226,z:260},//-56.5 -57.5
+            {x:220,z:36},
+            {x:184,z:-32},
+            {x:40,z:-36},
+            {x:-52,z:-84},//13 21
+            {x:-92,z:-40},//23 10
+            {x:-60,z:-8},//15 2
+            {x:-16,z:-22},//4 5.6
+            {x:0,z:0}
+        ]},{
+            path:"tyminside/tym3.json",
+            cp:[
+                {x:0,z:0},
+                {x:0,z:280},
+                {x:-80,z:384},
+                {x:0,z:448},
+                {x:248,z:434},//-62 -108
+                {x:320,z:364},
+                {x:226,z:260},//-56.5 -57.5
+                {x:220,z:36},
+                {x:184,z:-32},
+                {x:40,z:-36},
+                {x:-52,z:-84},//13 21
+                {x:-92,z:-40},//23 10
+                {x:-60,z:-8},//15 2
+                {x:-16,z:-22},//4 5.6
+                {x:0,z:0}
+            ]}
 ];
 var stageId=0;
 var loadstats=0;
@@ -221,6 +221,71 @@ loadstats++;
 })();
 /** Gives the aptitude for an object3D to clone recursively with its material cloned (normal clone does not clone material)*/
 
+var itemMaterials=[undefined,undefined,undefined,undefined];
+
+(function(){
+    var loader = new THREE.TextureLoader();
+
+    itemMaterials[1]=new THREE.MeshBasicMaterial( {
+        color:0xaaaaff,
+        transparent:true,
+        opacity:0.5
+    } );
+    loadstats++;
+    // load a resource
+    loader.load(
+        // resource URL
+        'textures/toyama.gif',
+
+        // onLoad callback
+        function ( texture ) {
+            // in this example we create the material when the texture is loaded
+            var material = new THREE.MeshBasicMaterial( {
+                map: texture,
+                alphaTest:0.18,
+                transparent:true
+            } );
+            itemMaterials[3]=material;
+            loadstats--;
+        },
+
+        // onProgress callback currently not supported
+        undefined,
+
+        // onError callback
+        function ( err ) {
+            console.error( 'An error happened.' );
+            loadstats--;
+        }
+    );
+    loadstats++;
+    // load a resource
+    loader.load(
+        // resource URL
+        'textures/banana.png',
+
+        // onLoad callback
+        function ( texture ) {
+            // in this example we create the material when the texture is loaded
+            var material = new THREE.MeshBasicMaterial( {
+                map: texture,
+                alphaTest:0.18,
+                transparent:true
+            } );
+            itemMaterials[2]=material;
+            loadstats--;
+        },
+
+        // onProgress callback currently not supported
+        undefined,
+
+        // onError callback
+        function ( err ) {
+            console.error( 'An error happened.' );
+            loadstats--;
+        }
+    );
+})();
 THREE.Object3D.prototype.GdeepCloneMaterials = function() {
     var object = this.clone( new THREE.Object3D(), false );
 

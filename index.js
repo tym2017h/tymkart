@@ -25,6 +25,7 @@ function Item(){
     this.uuid=0;
     this.target=0;
     this.staticId=-1;
+    this.owner=0;
 }
 var cars=[];
 var items=[];
@@ -141,11 +142,12 @@ app.post('/setpos', function (request, response) {
         response.send(JSON.stringify(cars));
    */
     lastConnection=time;
+    var _cid=request.body.cid;
     //console.log("aaa"+checkNumber(10));
     if(request.body.rot!=null&&request.body.pos!=null&&
        checkNumber(request.body.cid)&&request.body.acc!=null&&
        request.body.vel!=null){
-        var cid=request.body.cid;
+        var cid=_cid;
         var p=request.body.pos;
         var r=request.body.rot;
         var a=request.body.acc;
@@ -202,9 +204,12 @@ app.post('/setpos', function (request, response) {
                 response.send("nocar");
                 return;
             }
-        }catch(e){}
+        }catch(e){
+            return;
+        }
     }else{
         console.log("f");
+        return;
     }
     if(request.body.added!=null&&
        Array.isArray(request.body.added)&&
@@ -233,6 +238,8 @@ app.post('/setpos', function (request, response) {
             if(!checkNumber(_target))return;
             var _staticId=sentItem.staticId;
             if(!checkNumber(_staticId))return;
+            var _owner=sentItem.owner;
+            if(!checkNumber(_owner))return;
             var _item=new Item();
             if(_staticId>=0){
                 for(var j=0;j<items.length;j++){
@@ -245,6 +252,11 @@ app.post('/setpos', function (request, response) {
             for(var j=0;j<items.length;j++){
                 if(items[j].uuid==_uuid){
                     exists=true;
+                    if(items[j].owner==_cid){
+                        items[j].p={x:_p.x,y:_p.y,z:_p.z};
+                        items[j].target=_target;
+                        items[j].cp=_cp;
+                    }
                     break;
                 }
             }
@@ -255,6 +267,7 @@ app.post('/setpos', function (request, response) {
             _item.uuid=_uuid;
             _item.target=_target;
             _item.staticId=_staticId;
+            _item.owner=_owner;
             if(items.length<500)
                 items.push(_item);
         }

@@ -33,10 +33,62 @@ function Item(x,y,z,id,mesh){
     this.size=0.5;
     this.target=0;
     this.staticId=-1;
+    this.owner=0;
     this.setStatic=function(){
         this.staticId=staticItemId;
         staticItemId++;
     }
+    this.updated=true;
+    this.update=function(dt){
+        if(this.owner!=player.cid){
+            this.updateMesh();
+            return;
+        }
+        console.log("itemupdate"+this.id);
+        this.updated=true;
+        if(this.id==3){
+            //this.p.x+=dt;
+            var vel=70;
+            var nextIndex=(this.cp+1)%(cp.length);
+            var targetPoint={x:0,y:0,z:0};
+            if((this.target==player.cid
+               ||player.cid==null)&&
+               player.cp+(player.lap+1)*cp.length<=this.cp+1){
+                    targetPoint=player.pos;
+                
+            }else{
+                targetPoint={x:cp[nextIndex].x,y:0,z:cp[nextIndex].z};
+                if(cp[nextIndex].y!=null){
+                    targetPoint.y=cp[nextIndex].y;
+                }
+            }
+            var xzd=XZDistance(this.p,targetPoint);
+            if(xzd<vel*dt){
+                this.p=targetPoint;
+                this.cp++;
+            }else{
+                this.p.x+=(targetPoint.x-this.p.x)*vel*dt/xzd;
+                this.p.z+=(targetPoint.z-this.p.z)*vel*dt/xzd;
+                var ty=targetPoint.y;
+                var yd=ty-this.p.y;
+                var yd1=yd>0?yd:-yd;
+                if(yd1<vel*dt){
+                    this.p.y=ty;
+                }else{
+                    this.p.y+=(yd)*vel*dt/yd1;
+                }
+            }
+
+        }
+        this.updateMesh();
+    }
+    this.updateMesh=function(){
+        this.mesh.position.x=-this.p.x;
+        this.mesh.position.y=this.p.y+1;
+        this.mesh.position.z=this.p.z;
+        this.mesh.quaternion.copy( camera.quaternion );
+    }
+
 }
 
 camera.aspect=width/height;
@@ -242,27 +294,36 @@ function timer(){
         d.acc=player.acc;
         d.goal=player.goal;
         d.spin=player.spin;
-        function tmpItem(p,id,cp,uuid,target,staticId){
+        function tmpItem(p,id,cp,uuid,target,staticId,owner){
             this.p=p;
             this.id=id;
             this.cp=cp;
             this.uuid=uuid;
             this.target=target;
             this.staticId=staticId;
+            this.owner=owner;
         }
         var sentRemoved=[];
         for(var i=0;i<removedItems.length;i++){
             var o=removedItems[i];
-            sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+            sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,o.owner));
         }
         if(removedItems.length!=0){
             console.log(removedItems);
             console.log(sentRemoved);
         }
         var sentAdded=[];
+        /*
         for(var i=0;i<addedItems.length;i++){
             var o=addedItems[i];
             sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+        }*/
+        for(var i=0;i<fieldItems.length;i++){
+            var o=fieldItems[i];
+            if(o.updated){
+                sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+            }
+            fieldItems[i].updated=false;
         }
         addedItems=[];
         removedItems=[];
@@ -270,7 +331,7 @@ function timer(){
         d.removed=sentRemoved;
         console.log(d);
         senttime=timenow;
-        
+
         dopost(JSON.stringify(d),"/setpos",function(res){
             lag=new Date().getTime()- senttime;
             sent=false; 
@@ -314,11 +375,11 @@ function timer(){
                     }
                 }
             }
-            
+
             //console.log(onlineArr);
             //console.log(fieldArr);
             //console.log(sentRemoved);
-            
+
             for(var i=0;i<onlineArr.length;i++){
                 if(onlineArr[i])continue;
                 var _item=onlineItems[i];
@@ -326,6 +387,7 @@ function timer(){
                 realItem.uuid=_item.uuid;
                 realItem.mesh=generateMeshForItem(_item.p.x,_item.p.y,_item.p.z,_item.id);
                 realItem.staticId=_item.staticId;
+                realItem.owner=_item.owner;
                 fieldItems.push(realItem);
                 console.log(realItem);
             }
@@ -364,8 +426,14 @@ function timer(){
     if(keysPress[39]==true)handle=-1;
     if(state=="wait"){
         player.reset();
+        for(var i=0;i<fieldItems.length;i++){
+            fieldItems[i].updateMesh();
+        }
     }
     if(state=="race"){
+        for(var i=0;i<fieldItems.length;i++){
+            fieldItems[i].update(dt);
+        }
         player.rot+=handle*dt*1;
         player.acc=1;
         if(player.goal!=null){
@@ -462,7 +530,6 @@ function timer(){
         requestAnimationFrame(timer);
     }
 }
-check();
 function init(){
     additemBox(0,0.6,450);
     additemBox(0,0.6,80);
@@ -479,8 +546,8 @@ function check()
 }
 
 function generateMeshForItem(x,y,z,id){
-    var geometry = new THREE.CubeGeometry(2, 2,2);
-    var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
+    var geometry = new THREE.PlaneGeometry(2, 2,2);
+    var material = itemMaterials[id];
     var mesh = new THREE.Mesh( geometry, material );
     mesh.position.x=-x;
     mesh.position.y=y;
@@ -492,14 +559,17 @@ function additem(x,y,z,id){/*
     var geometry = new THREE.CubeGeometry(2, 2,2);
     var material = new THREE.MeshLambertMaterial( { color: 0xffffff} );
     var mesh = new THREE.Mesh( geometry, material );*/
-    var mesh=generateMeshForItem(x,y,z,1);
+    var mesh=generateMeshForItem(x,y,z,id);
     var item=new Item(x,y,z,id,mesh);
     item.size=1.4;
+    item.owner=player.cid;
     if(id==3){
         item.target=-1;
         if(frontPlayer>=0){
             item.target=frontPlayer;
+            item.owner=frontPlayer;
         }
+        item.cp=player.cp+player.lap*cp.length;
     }
     fieldItems.push(item);
     addedItems.push(item);
@@ -577,3 +647,4 @@ function XYZDistance(v1,v2){
 function XZDistance(v1,v2){
     return Math.sqrt((v1.x-v2.x)*(v1.x-v2.x)+(v1.z-v2.z)*(v1.z-v2.z))
 }
+check();
