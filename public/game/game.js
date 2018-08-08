@@ -562,7 +562,11 @@ function additem(x,y,z,id){/*
     var mesh=generateMeshForItem(x,y,z,id);
     var item=new Item(x,y,z,id,mesh);
     item.size=1.4;
-    item.owner=player.cid;
+    if(player.cid!=null){
+        item.owner=player.cid;
+    }else{
+        item.owner=0;
+    }
     if(id==3){
         item.target=-1;
         if(frontPlayer>=0){
