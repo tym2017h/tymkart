@@ -216,9 +216,11 @@ app.post('/setpos', function (request, response) {
        request.body.removed!=null&&
        Array.isArray(request.body.removed)){
         if(request.body.removed.length>0){
+            console.log("request.body.removed");
             console.log(request.body.removed);
         }
         if(request.body.added.length>0){
+            console.log("request.body.added");
             console.log(request.body.added);
         }
         var added=request.body.added;
