@@ -20,6 +20,7 @@ window.onkeydown = function (ev) {
 window.onkeyup = function (ev) {
     keysPress[ev.keyCode] = false;
 }
+var itemTrigger=false;
 window.addEventListener('touchstart', function (e) {
     if(e.touches){
         tilt=0;
@@ -29,7 +30,15 @@ window.addEventListener('touchstart', function (e) {
             }
             else if(e.touches[0].pageX>window.innerWidth*0.7){
                 tilt=-1;
+            }else if(window.innerWidth*0.45<e.touches[0].pageX&&
+                    e.touches[0].pageX<window.innerWidth*0.55&&
+                    e.touches[0].pageY>window.innerHeight-window.innerWidth*0.1){
+                itemTrigger=true;
             }
+            
+//itemButton.style.left=(window.innerWidth*0.45)+"px";
+//itemButton.style.height=(window.innerWidth*0.1)+"px";
+//itemButton.style.width=(window.innerWidth*0.1)+"px";
         }
     }
     e.preventDefault();

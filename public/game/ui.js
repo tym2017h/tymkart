@@ -114,7 +114,7 @@ itemImg.style.backgroundSize="cover";
 var itemtextures=[
     "",
     "",
-    "textures/right.png",
+    "textures/banana.png",
     "textures/toyama.gif"
 ];
 

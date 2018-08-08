@@ -474,7 +474,8 @@ function timer(){
             player.acc=0;
         }
         player.physics(dt,true);
-        if(keysPress[32]&&player.item!=0){
+        if((keysPress[32]||itemTrigger)&&player.item!=0){
+            itemTrigger=false;
             var k=-1;
             if(player.item==3){
                 k=1;
