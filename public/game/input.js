@@ -34,7 +34,7 @@ window.addEventListener('touchstart', function (e) {
                     e.touches[0].pageX<window.innerWidth*0.55&&
                     e.touches[0].pageY>window.innerHeight-window.innerWidth*0.1){
                 itemTrigger=true;
-                alert("item trigger");
+                //alert("item trigger");
             }
             
 //itemButton.style.left=(window.innerWidth*0.45)+"px";

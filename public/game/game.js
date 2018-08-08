@@ -475,7 +475,6 @@ function timer(){
         }
         player.physics(dt,true);
         if((keysPress[32]||itemTrigger)&&player.item!=0){
-            itemTrigger=false;
             var k=-1;
             if(player.item==3){
                 k=1;
@@ -483,6 +482,7 @@ function timer(){
             additem(player.pos.x+Math.sin(-player.rot)*2*k,player.pos.y,player.pos.z+Math.cos(-player.rot)*2*k,player.item);
             player.item=0;
         }
+        itemTrigger=false;
         //console.log(player.item);
         setItemBackground(player.item);
 
