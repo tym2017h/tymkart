@@ -216,7 +216,10 @@ app.post('/setpos', function (request, response) {
        request.body.removed!=null&&
        Array.isArray(request.body.removed)){
         if(request.body.removed.length>0){
-            console.log(request.body);
+            console.log(request.body.removed);
+        }
+        if(request.body.added.length>0){
+            console.log(request.body.added);
         }
         var added=request.body.added;
         var removed=request.body.removed;
@@ -275,7 +278,7 @@ app.post('/setpos', function (request, response) {
                 if(items[j].uuid==_uuid){
                     exists=true;
                     console.log((items[j].owner==_cid)+
-                               ","+items[j].p);
+                               ","+JSON.stringify( items[j].p));
                     if(items[j].owner==_cid){
                         items[j].p={x:_p.x,y:_p.y,z:_p.z};
                         items[j].target=_target;
@@ -311,6 +314,9 @@ app.post('/setpos', function (request, response) {
                 console.log("item removed:"+matched);
                 items.splice(matched,1);
             }
+        }
+        if(request.body.added.length>0){
+            console.log(items);
         }
     }
     //console.log(request.body.removed);

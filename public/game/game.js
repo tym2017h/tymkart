@@ -40,7 +40,7 @@ function Item(x,y,z,id,mesh){
     }
     this.updated=true;
     this.update=function(dt){
-        if(this.owner!=player.cid){
+        if(this.owner!=player.cid&&player.cid!=null){
             this.updateMesh();
             return;
         }
@@ -319,6 +319,7 @@ function timer(){
             var o=addedItems[i];
             sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
         }*/
+        
         for(var i=0;i<fieldItems.length;i++){
             var o=fieldItems[i];
             if(o.updated){
@@ -398,6 +399,7 @@ function timer(){
                 removeuuids.push(fieldItems[i].uuid);
             }
             for(var i=0;i<removeuuids.length;i++){
+                console.log("removeItemNoServer:"+removeuuids[i]);
                 removeItemNoServer(removeuuids[i]);
             }
             netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
@@ -446,7 +448,7 @@ function timer(){
             if(player.item==3){
                 k=1;
             }
-            additem(player.pos.x+Math.sin(player.rot)*2*k,player.pos.y,player.pos.z+Math.cos(player.rot)*2*k,player.item);
+            additem(player.pos.x+Math.sin(-player.rot)*2*k,player.pos.y,player.pos.z+Math.cos(-player.rot)*2*k,player.item);
             player.item=0;
         }
         //console.log(player.item);
