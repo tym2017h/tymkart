@@ -53,7 +53,7 @@ function Item(x,y,z,id,mesh){
             var targetPoint={x:0,y:0,z:0};
             if((this.target==player.cid
                 ||player.cid==null)&&
-               player.cp+(player.lap+1)*cp.length<=this.cp+1){
+               player.cp+(player.lap)*cp.length<=this.cp+1){
                 targetPoint=player.pos;
 
             }else{
@@ -301,7 +301,7 @@ function timer(){
                         onlineArr[i]=true;
                         fieldArr[j]=true;
                         if(onlineItems[i].owner!=player.cid){
-                            fieldItems[j].pos=onlineItems[i].p;  fieldItems[j].cp=onlineItems[i].cp;  fieldItems[j].target=onlineItems[i].target;
+                          console.log("position updated");  fieldItems[j].p=onlineItems[i].p;  fieldItems[j].cp=onlineItems[i].cp;  fieldItems[j].target=onlineItems[i].target;
                             
                         }
                     }
