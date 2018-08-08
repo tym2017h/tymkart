@@ -345,7 +345,7 @@ function timer(){
         removedItems=[];
         d.added=sentAdded;
         d.removed=sentRemoved;
-        console.log(d);
+        //console.log(d);
         senttime=timenow;
         sent=true;
 
