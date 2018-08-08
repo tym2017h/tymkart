@@ -486,7 +486,10 @@ function timer(){
         if((keysPress[32]||itemTrigger)&&player.item!=0){
             var k=-1;
             if(player.item==3){
-                k=1;
+                k=dt*120+4;
+                if(k<4){
+                    k=4;
+                }
             }
             additem(player.pos.x+Math.sin(-player.rot)*2*k,player.pos.y,player.pos.z+Math.cos(-player.rot)*2*k,player.item);
             player.item=0;
@@ -618,17 +621,18 @@ function additem(x,y,z,id){/*
             item.target=frontPlayer;
             item.owner=frontPlayer;
         }
-        item.cp=player.cp+player.lap*cp.length;
+        item.cp=player.cp+2+player.lap*cp.length;
     }
-    console.log(fieldItems.length);
+    //console.log(fieldItems.length);
     fieldItems.push(item);
     addedItems.push(item);
-    console.log(fieldItems);
+    //console.log(fieldItems);
+    /*
     var ll=fieldItems.length;
     console.log(ll);
     console.log(fieldItems.length);
     console.log(fieldItems[ll-1]);
-    console.log(fieldItems.length);
+    console.log(fieldItems.length);*/
     //scene.add( mesh );
 }
 function additemBox(x,y,z){
