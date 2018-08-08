@@ -258,6 +258,7 @@ app.post('/setpos', function (request, response) {
             }
             var _owner=sentItem.owner;
             if(!checkNumber(_owner)){
+                console.log(added);
                 console.log("7");
                 return;
             }
