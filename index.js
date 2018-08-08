@@ -274,6 +274,8 @@ app.post('/setpos', function (request, response) {
             for(var j=0;j<items.length;j++){
                 if(items[j].uuid==_uuid){
                     exists=true;
+                    console.log((items[j].owner==_cid)+
+                               ","+items[j].p);
                     if(items[j].owner==_cid){
                         items[j].p={x:_p.x,y:_p.y,z:_p.z};
                         items[j].target=_target;
