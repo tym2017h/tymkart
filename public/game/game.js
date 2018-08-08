@@ -321,7 +321,7 @@ function timer(){
             }
             var removeuuids=[];
             for(var i=0;i<fieldArr.length;i++){
-                for(var j=0;j<addedItems;j++)
+                for(var j=0;j<addedItems.length;j++)
                 {
                     if(addedItems[j].uuid==fieldItems[i].uuid){
                         fieldArr[i]=true;
