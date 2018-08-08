@@ -330,6 +330,7 @@ function timer(){
                 if(fieldArr[i])continue;
                 removeuuids.push(fieldItems[i].uuid);
                 if(fieldItems[i].id>1){
+                    console.log(addedItems);
                     console.log("item removed");
                 }
             }
