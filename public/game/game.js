@@ -52,10 +52,10 @@ function Item(x,y,z,id,mesh){
             var nextIndex=(this.cp+1)%(cp.length);
             var targetPoint={x:0,y:0,z:0};
             if((this.target==player.cid
-               ||player.cid==null)&&
+                ||player.cid==null)&&
                player.cp+(player.lap+1)*cp.length<=this.cp+1){
-                    targetPoint=player.pos;
-                
+                targetPoint=player.pos;
+
             }else{
                 targetPoint={x:cp[nextIndex].x,y:0,z:cp[nextIndex].z};
                 if(cp[nextIndex].y!=null){
@@ -259,6 +259,8 @@ console.log(player.pos);
 var firststate=null;
 var rawstate=state;
 var sent_state=false;
+
+var resChache=null;
 function timer(){
     if(loadstats>0){
         if(neutralTime>end){
@@ -284,6 +286,56 @@ function timer(){
     var dt=timenow-lasttime;
     //console.log(JSON.stringify(player.pos)+","+timenow);
     if(!sent){
+        if(resChache){
+            var p=resChache;
+            var onlineItems=p.items;
+            //console.log(p.items);
+            var onlineArr=new Array(onlineItems.length);
+            var fieldArr=new Array(fieldItems.length);
+            for(var i=0;i<onlineItems.length;i++){
+                for(var j=0;j<fieldItems.length;j++){
+                    //console.log(i);
+                    //console.log(onlineItems[i]);
+                    //console.log(fieldItems[j]);
+                    if(onlineItems[i].uuid==fieldItems[j].uuid){
+                        onlineArr[i]=true;
+                        fieldArr[j]=true;
+                    }
+                }
+            }
+
+            //console.log(onlineArr);
+            //console.log(fieldArr);
+            //console.log(sentRemoved);
+
+            for(var i=0;i<onlineArr.length;i++){
+                if(onlineArr[i])continue;
+                var _item=onlineItems[i];
+                var realItem=new Item(_item.p.x,_item.p.y,_item.p.z,_item.id);
+                realItem.uuid=_item.uuid;
+                realItem.mesh=generateMeshForItem(_item.p.x,_item.p.y,_item.p.z,_item.id);
+                realItem.staticId=_item.staticId;
+                realItem.owner=_item.owner;
+                fieldItems.push(realItem);
+                console.log(realItem);
+            }
+            var removeuuids=[];
+            for(var i=0;i<fieldArr.length;i++){
+                if(fieldArr[i])continue;
+                removeuuids.push(fieldItems[i].uuid);
+                if(fieldItems[i].id>1){
+                    console.log("item removed");
+                }
+            }
+            for(var i=0;i<removeuuids.length;i++){
+                console.log("removeItemNoServer:"+removeuuids[i]);
+                removeItemNoServer(removeuuids[i]);
+            }
+            netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
+                "<br>pos:"+Math.floor(player.pos.x)+","
+                +Math.floor(player.pos.z);
+
+        }
         var d={};
         d.pos=player.pos;
         d.vel=player.vel;
@@ -325,11 +377,11 @@ function timer(){
             var o=addedItems[i];
             sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
         }*/
-        
+
         for(var i=0;i<fieldItems.length;i++){
             var o=fieldItems[i];
             if(o.id>1){
-                console.log("fieldItems");
+                console.log("fieldItems id>1");
                 console.log(o);
             }
             if(o.updated){
@@ -358,6 +410,7 @@ function timer(){
                 return;
             }
             var p=JSON.parse(res);
+            resChache=p;
             updatecars(p.cars);
             //console.log(res);
             console.log(p.state);
@@ -376,52 +429,6 @@ function timer(){
                     player.audience=true;
                 }
             }
-            var onlineItems=p.items;
-            console.log(p.items);
-            var onlineArr=new Array(onlineItems.length);
-            var fieldArr=new Array(fieldItems.length);
-            for(var i=0;i<onlineItems.length;i++){
-                for(var j=0;j<fieldItems.length;j++){
-                    //console.log(i);
-                    //console.log(onlineItems[i]);
-                    //console.log(fieldItems[j]);
-                    if(onlineItems[i].uuid==fieldItems[j].uuid){
-                        onlineArr[i]=true;
-                        fieldArr[j]=true;
-                    }
-                }
-            }
-
-            //console.log(onlineArr);
-            //console.log(fieldArr);
-            //console.log(sentRemoved);
-
-            for(var i=0;i<onlineArr.length;i++){
-                if(onlineArr[i])continue;
-                var _item=onlineItems[i];
-                var realItem=new Item(_item.p.x,_item.p.y,_item.p.z,_item.id);
-                realItem.uuid=_item.uuid;
-                realItem.mesh=generateMeshForItem(_item.p.x,_item.p.y,_item.p.z,_item.id);
-                realItem.staticId=_item.staticId;
-                realItem.owner=_item.owner;
-                fieldItems.push(realItem);
-                console.log(realItem);
-            }
-            var removeuuids=[];
-            for(var i=0;i<fieldArr.length;i++){
-                if(fieldArr[i])continue;
-                removeuuids.push(fieldItems[i].uuid);
-                if(fieldItems[i]>1){
-                    console.log("item removed");
-                }
-            }
-            for(var i=0;i<removeuuids.length;i++){
-                console.log("removeItemNoServer:"+removeuuids[i]);
-                removeItemNoServer(removeuuids[i]);
-            }
-            netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
-                "<br>pos:"+Math.floor(player.pos.x)+","
-                +Math.floor(player.pos.z);
             sent=false; 
         });
     }
@@ -598,6 +605,7 @@ function additem(x,y,z,id){/*
     }
     fieldItems.push(item);
     addedItems.push(item);
+    console.log(fieldItems);
     //scene.add( mesh );
 }
 function additemBox(x,y,z){
@@ -649,6 +657,7 @@ function removeItem(uuid)
     console.log("removeItem("+uuid+")");
     scene.remove(fieldItems[index].mesh);
     fieldItems.splice(index, 1);
+
 }
 function removeItemNoServer(uuid)
 {
