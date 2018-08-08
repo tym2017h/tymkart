@@ -306,7 +306,8 @@ function timer(){
         var sentRemoved=[];
         for(var i=0;i<removedItems.length;i++){
             var o=removedItems[i];
-            sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,o.owner));
+            sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,
+                                         o.owner));
         }
         if(removedItems.length!=0){
             console.log(removedItems);
@@ -321,7 +322,7 @@ function timer(){
         for(var i=0;i<fieldItems.length;i++){
             var o=fieldItems[i];
             if(o.updated){
-                sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId));
+                sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,o.owner));
             }
             fieldItems[i].updated=false;
         }
