@@ -321,6 +321,12 @@ function timer(){
             }
             var removeuuids=[];
             for(var i=0;i<fieldArr.length;i++){
+                for(var j=0;j<addedItems;j++)
+                {
+                    if(addedItems[j].uuid==fieldItems[i].uuid){
+                        fieldArr[i]=true;
+                    }
+                }
                 if(fieldArr[i])continue;
                 removeuuids.push(fieldItems[i].uuid);
                 if(fieldItems[i].id>1){
