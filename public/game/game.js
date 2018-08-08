@@ -45,8 +45,8 @@ function Item(x,y,z,id,mesh){
             return;
         }
         //console.log("itemupdate"+this.id);
-        this.updated=true;
         if(this.id==3){
+            this.updated=true;
             //this.p.x+=dt;
             var vel=70;
             var nextIndex=(this.cp+1)%(cp.length);
@@ -306,14 +306,19 @@ function timer(){
         var sentRemoved=[];
         for(var i=0;i<removedItems.length;i++){
             var o=removedItems[i];
+            if(o.id>1){
+                console.log("removedItems");
+                console.log(o);
+            }
             sentRemoved.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,
                                          o.owner));
         }
+        /*
         if(removedItems.length!=0){
             console.log("sentRemoved");
             console.log(removedItems);
             console.log(sentRemoved);
-        }
+        }*/
         var sentAdded=[];
         /*
         for(var i=0;i<addedItems.length;i++){
@@ -323,18 +328,19 @@ function timer(){
         
         for(var i=0;i<fieldItems.length;i++){
             var o=fieldItems[i];
-            if(o.id!==1){
+            if(o.id>1){
+                console.log("fieldItems");
                 console.log(o);
             }
             if(o.updated){
                 sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,o.owner));
             }
             fieldItems[i].updated=false;
-        }
+        }/*
         if(sentAdded.length!=0){
             console.log("sentAdded");
             console.log(sentAdded);
-        }
+        }*/
         addedItems=[];
         removedItems=[];
         d.added=sentAdded;
