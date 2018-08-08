@@ -607,6 +607,10 @@ function additem(x,y,z,id){/*
     fieldItems.push(item);
     addedItems.push(item);
     console.log(fieldItems);
+    var ll=fieldItems.length;
+    console.log(ll);
+    console.log(fieldItems.length);
+    console.log(fieldItems[ll-1]);
     console.log(fieldItems.length);
     //scene.add( mesh );
 }
