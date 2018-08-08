@@ -44,7 +44,7 @@ function Item(x,y,z,id,mesh){
             this.updateMesh();
             return;
         }
-        console.log("itemupdate"+this.id);
+        //console.log("itemupdate"+this.id);
         this.updated=true;
         if(this.id==3){
             //this.p.x+=dt;
@@ -310,6 +310,7 @@ function timer(){
                                          o.owner));
         }
         if(removedItems.length!=0){
+            console.log("sentRemoved");
             console.log(removedItems);
             console.log(sentRemoved);
         }
@@ -326,6 +327,10 @@ function timer(){
                 sentAdded.push(new tmpItem(o.p,o.id,o.cp,o.uuid,o.target,o.staticId,o.owner));
             }
             fieldItems[i].updated=false;
+        }
+        if(sentAdded.length!=0){
+            console.log("sentAdded");
+            console.log(sentAdded);
         }
         addedItems=[];
         removedItems=[];
@@ -570,6 +575,7 @@ function additem(x,y,z,id){/*
     }else{
         item.owner=0;
     }
+    item.updated=true;
     if(id==3){
         item.target=-1;
         if(frontPlayer>=0){
