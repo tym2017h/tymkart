@@ -603,9 +603,11 @@ function additem(x,y,z,id){/*
         }
         item.cp=player.cp+player.lap*cp.length;
     }
+    console.log(fieldItems.length);
     fieldItems.push(item);
     addedItems.push(item);
     console.log(fieldItems);
+    console.log(fieldItems.length);
     //scene.add( mesh );
 }
 function additemBox(x,y,z){
@@ -650,6 +652,7 @@ function removeItem(uuid)
             index=i;
             break;
         }else if(i==fieldItems.length-1){
+            console.log("removeitem:not found");
             return;
         }
     }
@@ -668,6 +671,7 @@ function removeItemNoServer(uuid)
             break;
         }
         if(i==fieldItems.length-1){
+            console.log("removeItemNoServer:not found");
             return;
         }
     }
