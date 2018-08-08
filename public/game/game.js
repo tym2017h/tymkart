@@ -621,7 +621,7 @@ function additem(x,y,z,id){/*
             item.target=frontPlayer;
             item.owner=frontPlayer;
         }
-        item.cp=player.cp+2+player.lap*cp.length;
+        item.cp=player.cp+1+player.lap*cp.length;
     }
     //console.log(fieldItems.length);
     fieldItems.push(item);
