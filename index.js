@@ -224,22 +224,43 @@ app.post('/setpos', function (request, response) {
             var sentItem=added[i];
             var exists=false;
             var _id=sentItem.id;
-            if(!checkNumber(_id))return;
+            if(!checkNumber(_id)){
+                console.log("1");
+                return;
+            }
             var _p=sentItem.p;
             if(_p==null||
                (!checkNumber(_p.x))||
                (!checkNumber(_p.y))||
-               (!checkNumber(_p.z)))return;
+               (!checkNumber(_p.z))){
+                console.log("2");
+                return;
+            }
             var _cp=sentItem.cp;
-            if(!checkNumber(_cp))return;
+            if(!checkNumber(_cp)){
+                console.log("3");
+                return;
+            }
             var _uuid=sentItem.uuid;
-            if(!checkNumber(_uuid))return;
+            if(!checkNumber(_uuid)){
+                console.log("4");
+                return;
+            }
             var _target=sentItem.target;
-            if(!checkNumber(_target))return;
+            if(!checkNumber(_target)){
+                console.log("5");
+                return;
+            }
             var _staticId=sentItem.staticId;
-            if(!checkNumber(_staticId))return;
+            if(!checkNumber(_staticId)){
+                console.log("6");
+                return;
+            }
             var _owner=sentItem.owner;
-            if(!checkNumber(_owner))return;
+            if(!checkNumber(_owner)){
+                console.log("7");
+                return;
+            }
             var _item=new Item();
             if(_staticId>=0){
                 for(var j=0;j<items.length;j++){
