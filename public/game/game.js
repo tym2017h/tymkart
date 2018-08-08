@@ -323,6 +323,7 @@ function timer(){
                 realItem.mesh=generateMeshForItem(_item.p.x,_item.p.y,_item.p.z,_item.id);
                 realItem.staticId=_item.staticId;
                 realItem.owner=_item.owner;
+                realItem.target=_item.target;
                 fieldItems.push(realItem);
                 console.log(realItem);
             }
@@ -347,7 +348,8 @@ function timer(){
             }
             netdiv.innerHTML="lag:"+lag+" servertime:"+p.time+" timediff:"+timediff+
                 "<br>pos:"+Math.floor(player.pos.x)+","
-                +Math.floor(player.pos.z);
+                +Math.floor(player.pos.z)+", cid:"+
+                player.cid;
 
         }
         var d={};
