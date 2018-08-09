@@ -40,6 +40,7 @@ function Item(x,y,z,id,mesh){
     }
     this.updated=true;
     this.update=function(dt){
+        console.log(player.lap);
         if(this.owner!=player.cid&&player.cid!=null){
             this.updateMesh();
             return;
@@ -53,7 +54,7 @@ function Item(x,y,z,id,mesh){
             var nextIndex=(this.cp+1)%(cp.length);
             var targetPoint={x:0,y:0,z:0};
             if(player.cid!=null){
-                logArr.push("target cp"+player.cp+(player.lap)*cp.length);
+                logArr.push("target cp"+(player.cp+(player.lap)*cp.length));
             }
             if((this.target==player.cid
                 ||player.cid==null)&&
