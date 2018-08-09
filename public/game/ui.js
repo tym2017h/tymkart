@@ -42,6 +42,21 @@ netdiv.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,13
 document.body.appendChild(netdiv);
 
 
+var logdiv=document.createElement("div");
+logdiv.style.position="absolute";
+logdiv.style.zIndex="1";
+logdiv.style.color="white";
+logdiv.style.top= (window.innerHeight-80)+"px";
+logdiv.style.left=(window.innerWidth-200)+"px";
+logdiv.style.height="80px";
+logdiv.style.width="200px";
+logdiv.style.color="#fff";
+logdiv.style.verticalAlign="bottom";
+
+//logdiv.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,130,0.7),rgba(0,0,130,0.5))";
+document.body.appendChild(logdiv);
+
+
 var dialogdiv=document.createElement("div");
 dialogdiv.style.position="absolute";
 dialogdiv.style.zIndex="1";
@@ -136,6 +151,7 @@ function setItemBackground(srcId){
     var target="url('"+itemtextures[srcId]+"')";
     if(itemImg.style.backgroundImage!=target)  itemImg.style.backgroundImage=target;
 }
+var logArr=[];
 function ui(){
     var laptxt=frontPlayer+" "+state+" ";
 
@@ -284,5 +300,15 @@ function ui(){
     if(orderdiv.innerHTML!==ordertxt){
         orderdiv.innerHTML=ordertxt;
     }
+    var logstr="";
+    for(var i=0;i<logArr.length;i++){
+        logstr+=logArr[i]+"<br>";
+    }
+    logdiv.innerHTML=logstr;
+    logArr=[];
     laptxt="";
+    /*
+    if(logdiv.innerHTML.length>1024){
+        logdiv.innerHTML="";
+    }*/
 }

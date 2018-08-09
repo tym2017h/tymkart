@@ -46,11 +46,15 @@ function Item(x,y,z,id,mesh){
         }
         //console.log("itemupdate"+this.id);
         if(this.id==3){
+            logArr.push("item cp"+this.cp);
             this.updated=true;
             //this.p.x+=dt;
             var vel=70;
             var nextIndex=(this.cp+1)%(cp.length);
             var targetPoint={x:0,y:0,z:0};
+            if(player.cid!=null){
+                logArr.push("target cp"+player.cp+(player.lap)*cp.length);
+            }
             if((this.target==player.cid
                 ||player.cid==null)&&
                player.cp+(player.lap)*cp.length<=this.cp+1){
