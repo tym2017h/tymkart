@@ -328,6 +328,7 @@ function timer(){
                 realItem.mesh=generateMeshForItem(_item.p.x,_item.p.y,_item.p.z,_item.id);
                 realItem.staticId=_item.staticId;
                 realItem.owner=_item.owner;
+                realItem.cp=_item.cp;
                 realItem.target=_item.target;
                 fieldItems.push(realItem);
                 console.log(realItem);
