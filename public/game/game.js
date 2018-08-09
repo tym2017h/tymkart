@@ -40,7 +40,7 @@ function Item(x,y,z,id,mesh){
     }
     this.updated=true;
     this.update=function(dt){
-        console.log(player.lap);
+        //console.log(player.lap);
         if(this.owner!=player.cid&&player.cid!=null){
             this.updateMesh();
             return;
