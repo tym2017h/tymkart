@@ -226,12 +226,40 @@ var itemMaterials=[undefined,undefined,undefined,undefined];
 
 (function(){
     var loader = new THREE.TextureLoader();
-
+/*
     itemMaterials[1]=new THREE.MeshBasicMaterial( {
         color:0xaaaaff,
         transparent:true,
         opacity:0.5
-    } );
+    } );*/
+    loadstats++;
+    // load a resource
+    loader.load(
+        // resource URL
+        'textures/itemBox.png',
+
+        // onLoad callback
+        function ( texture ) {
+            // in this example we create the material when the texture is loaded
+            var material = new THREE.MeshBasicMaterial( {
+                map: texture,
+                opacity:0.6,
+                //alphaTest:0.18,
+                transparent:true
+            } );
+            itemMaterials[1]=material;
+            loadstats--;
+        },
+
+        // onProgress callback currently not supported
+        undefined,
+
+        // onError callback
+        function ( err ) {
+            console.error( 'An error happened.' );
+            loadstats--;
+        }
+    );
     loadstats++;
     // load a resource
     loader.load(

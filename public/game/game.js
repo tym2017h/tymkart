@@ -585,7 +585,11 @@ function timer(){
 }
 function init(){
     additemBox(0,0.6,450);
+    additemBox(-4,0.6,80);
+    additemBox(-2,0.6,80);
     additemBox(0,0.6,80);
+    additemBox(2,0.6,80);
+    additemBox(4,0.6,80);
 }
 function check()
 {
