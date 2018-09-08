@@ -5,9 +5,10 @@ var linearGrad2="linear-gradient(to top, rgba(240,240,30,0.8),rgba(30,30,30,0.7)
 var tdStyle2="background:"+linearGrad2+";border:10px;color:#fff;"+"font-size:30px;";
 var count=document.createElement("div");
 count.style.position="absolute";
-count.style.width=window.innerWidth+"px";
-count.style.top=(window.innerHeight/2-20)+"px";
-count.style.fontSize="40px";
+count.style.width=width+"px";
+count.style.top=(height/2-20)+"px";
+count.style.fontSize=pxstring(40);
+
 count.style.textAlign="center";
 count.style.color="#fff";
 count.style.zIndex="1";
@@ -19,12 +20,13 @@ lap.style.zIndex="1";
 lap.style.color="white";
 lap.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,130,0.7),rgba(0,0,130,0.5))";
 document.body.appendChild(lap);
+
 var orderdiv=document.createElement("div");
 orderdiv.style.position="absolute";
-orderdiv.style.left=(window.innerWidth-230)+"px";
-orderdiv.style.width="230px";
-orderdiv.style.height="100px";
-orderdiv.style.fontSize="40px";
+orderdiv.style.left=(width-pxv(230))+"px";
+orderdiv.style.width=pxstring(230);
+orderdiv.style.height=pxstring(100);
+orderdiv.style.fontSize=pxstring(40);
 orderdiv.style.textAlign="center";
 orderdiv.style.color="#fff";
 orderdiv.style.zIndex="1";
@@ -35,9 +37,9 @@ var netdiv=document.createElement("div");
 netdiv.style.position="absolute";
 netdiv.style.zIndex="1";
 netdiv.style.color="white";
-netdiv.style.top= (window.innerHeight-80)+"px";
-netdiv.style.height="80px";
-netdiv.style.width="200px";
+netdiv.style.top= (height-pxv(80))+"px";
+netdiv.style.height=pxstring(80);
+netdiv.style.width=pxstring(200);
 netdiv.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,130,0.7),rgba(0,0,130,0.5))";
 document.body.appendChild(netdiv);
 
@@ -46,10 +48,10 @@ var logdiv=document.createElement("div");
 logdiv.style.position="absolute";
 logdiv.style.zIndex="1";
 logdiv.style.color="white";
-logdiv.style.top= (window.innerHeight-80)+"px";
-logdiv.style.left=(window.innerWidth-200)+"px";
-logdiv.style.height="80px";
-logdiv.style.width="200px";
+logdiv.style.top= (height-pxv(80))+"px";
+logdiv.style.left=(width-pxv(200))+"px";
+logdiv.style.height=pxstring(80);
+logdiv.style.width=pxstring(200);
 logdiv.style.color="#fff";
 logdiv.style.verticalAlign="bottom";
 
@@ -61,10 +63,10 @@ var dialogdiv=document.createElement("div");
 dialogdiv.style.position="absolute";
 dialogdiv.style.zIndex="1";
 dialogdiv.style.color="white";
-dialogdiv.style.top= 100+"px";
-dialogdiv.style.height="80px";
+dialogdiv.style.top= pxstring(100);
+dialogdiv.style.height=pxstring(80);
 dialogdiv.style.width=window.innerWidth+"px";
-dialogdiv.style.fontSize="50px"
+dialogdiv.style.fontSize=pxstring(50);
 dialogdiv.style.background="linear-gradient(to right, rgba(0,0,130,0.5),rgba(0,0,130,0.7),rgba(0,0,130,0.5))";
 document.body.appendChild(dialogdiv);
 
@@ -72,8 +74,8 @@ var resultTable=document.createElement("table");
 resultTable.style.position="absolute";
 resultTable.style.zIndex="1";
 resultTable.style.color="white";
-resultTable.style.top= (window.innerHeight/2)+"px";
-resultTable.style.left= window.innerWidth/2+"px";
+resultTable.style.top= (height/2)+"px";
+resultTable.style.left= width/2+"px";
 resultTable.style.fontSize="30px";
 
 //button
@@ -81,10 +83,10 @@ var leftButton=document.createElement("div");
 leftButton.style.position="absolute";
 leftButton.style.zIndex="1";
 leftButton.style.color="white";
-leftButton.style.top= (window.innerHeight-80-(window.innerWidth*0.3))+"px";
+leftButton.style.top= (height-pxv(80)-(width*0.3))+"px";
 
-leftButton.style.height=(window.innerWidth*0.3)+"px";
-leftButton.style.width=(window.innerWidth*0.3)+"px";
+leftButton.style.height=(width*0.3)+"px";
+leftButton.style.width=(width*0.3)+"px";
 
 leftButton.style.background="linear-gradient(to right, rgba(50,50,50,0.5),rgba(50,50,50,0.7),rgba(50,50,50,0.5))";
 document.body.appendChild(leftButton);
@@ -99,10 +101,10 @@ var rightButton=document.createElement("div");
 rightButton.style.position="absolute";
 rightButton.style.zIndex="1";
 rightButton.style.color="white";
-rightButton.style.top= (window.innerHeight-80-(window.innerWidth*0.3))+"px";
-rightButton.style.left=(window.innerWidth*0.7)+"px";
-rightButton.style.height=(window.innerWidth*0.3)+"px";
-rightButton.style.width=(window.innerWidth*0.3)+"px";
+rightButton.style.top= (height-pxv(80)-(width*0.3))+"px";
+rightButton.style.left=(width*0.7)+"px";
+rightButton.style.height=(width*0.3)+"px";
+rightButton.style.width=(width*0.3)+"px";
 
 rightButton.style.background="linear-gradient(to right, rgba(50,50,50,0.5),rgba(50,50,50,0.7),rgba(50,50,50,0.5))";
 document.body.appendChild(rightButton);
@@ -144,7 +146,18 @@ itemButton.style.width=(window.innerWidth*0.1)+"px";
 setItemBackground(0);
 document.body.appendChild(itemButton);
 itemButton.appendChild(itemImg);
-
+function pxstring(v){
+    if(low_res){
+        v/=4;
+    }
+    return v+"px";
+}
+function pxv(v){
+    if(low_res){
+        v/=4;
+    }
+    return v;
+}
 function setItemBackground(srcId){
     //if(srcId>=itemtextures.length)
     //    return;
