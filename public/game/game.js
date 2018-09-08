@@ -17,6 +17,7 @@ var projector = new THREE.Projector();
 var ambient=0x444477;
 var sun=0xbbbb88;
 var camera = new THREE.PerspectiveCamera();
+camera.distance
 var frontPlayer=-1;
 var staticItemId=0;
 var fieldItems=[
@@ -551,7 +552,7 @@ function timer(){
     }
     if(player.mesh!=null){
         camera.position.x=player.mesh.position.x-Math.sin(player.rot)*12;
-        camera.position.y=player.mesh.position.y+4.75;
+        camera.position.y=player.mesh.position.y+3.75;
         camera.position.z=player.mesh.position.z-Math.cos(player.rot)*12;
         //camera.rotation.x=Math.PI/4;
         arrow.position.set(player.mesh.position.x,player.mesh.position.y+3.75,player.mesh.position.z);
@@ -583,13 +584,18 @@ function timer(){
         requestAnimationFrame(timer);
     }
 }
+var itemBoxes=[];
 function init(){
+    for(var i=0;i<itemBoxes.length;i++){
+        additemBox(itemBoxes[i].x,itemBoxes[i].y,itemBoxes[i].z);
+    }
+    /*
     additemBox(0,0.6,450);
     additemBox(-4,0.6,80);
     additemBox(-2,0.6,80);
     additemBox(0,0.6,80);
     additemBox(2,0.6,80);
-    additemBox(4,0.6,80);
+    additemBox(4,0.6,80);*/
 }
 function check()
 {

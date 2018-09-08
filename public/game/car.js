@@ -217,7 +217,7 @@ var Car=function(){
         var dx=tp.x-this.pos.x;
         var dz=tp.z-this.pos.z;
         this.dsq=dx*dx+dz*dz;
-        if(this.dsq<100){
+        if(this.dsq<400){
             this.cp++;
             this.checklapend();
             tp=cp[this.cp];

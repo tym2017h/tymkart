@@ -23,7 +23,7 @@ var orderdiv=document.createElement("div");
 orderdiv.style.position="absolute";
 orderdiv.style.left=(window.innerWidth-230)+"px";
 orderdiv.style.width="230px";
-orderdiv.style.height="60px";
+orderdiv.style.height="100px";
 orderdiv.style.fontSize="40px";
 orderdiv.style.textAlign="center";
 orderdiv.style.color="#fff";
@@ -200,6 +200,8 @@ function ui(){
     }else{
         ordertxt=(order+1)+"th";
     }
+    ordertxt+="<br>lap:";
+    ordertxt+=player.lap+"/"+LAP_ENDS;
     if(player.goal!=null||state=="result"){
         var contentArr1=[];
         resultTable.style.visibility="visible";
