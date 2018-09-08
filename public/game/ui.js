@@ -124,8 +124,8 @@ var tabletxt1="";
 
 var itemImg=document.createElement("div");
 itemImg.style.backgroundImage="url('textures/toyama.gif')";
-itemImg.style.width="100%";
-itemImg.style.height="100%";
+itemImg.style.width=(width*0.1)+"px";
+itemImg.style.height=(width*0.1)+"px";
 itemImg.style.backgroundSize="cover";
 
 var itemtextures=[
@@ -144,7 +144,7 @@ itemButton.style.left=(width*0.45)+"px";
 itemButton.style.height=(width*0.1)+"px";
 itemButton.style.width=(width*0.1)+"px";
 setItemBackground(0);
-itemButton.innerHTML="aaa";
+//itemButton.innerHTML="aaa";
 document.body.appendChild(itemButton);
 itemButton.appendChild(itemImg);
 function pxstring(v){
