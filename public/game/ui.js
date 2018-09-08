@@ -75,7 +75,7 @@ resultTable.style.position="absolute";
 resultTable.style.zIndex="1";
 resultTable.style.color="white";
 resultTable.style.top= (height/2)+"px";
-resultTable.style.left= (width/2)+"px";
+resultTable.style.left= width/2+"px";
 resultTable.style.fontSize="30px";
 
 //button
@@ -101,7 +101,7 @@ var rightButton=document.createElement("div");
 rightButton.style.position="absolute";
 rightButton.style.zIndex="1";
 rightButton.style.color="white";
-rightButton.style.top= Math.fl(height-pxv(80)-(width*0.3))+"px";
+rightButton.style.top= (height-pxv(80)-(width*0.3))+"px";
 rightButton.style.left=(width*0.7)+"px";
 rightButton.style.height=(width*0.3)+"px";
 rightButton.style.width=(width*0.3)+"px";
@@ -127,7 +127,7 @@ itemImg.style.backgroundImage="url('textures/toyama.gif')";
 itemImg.style.width="100%";
 itemImg.style.height="100%";
 itemImg.style.backgroundSize="cover";
-itemImg.style.position="relative";
+
 var itemtextures=[
     "",
     "",
@@ -139,11 +139,12 @@ var itemButton=document.createElement("div");
 itemButton.style.position="absolute";
 itemButton.style.zIndex="1";
 itemButton.style.color="white";
-itemButton.style.top=  Math.floor(height-(width*0.1))+"px";
-itemButton.style.left= Math.floor(width*0.45)+"px";
-itemButton.style.height= Math.floor(width*0.1)+"px";
-itemButton.style.width= Math.floor(width*0.1)+"px";
+itemButton.style.top= (height-(width*0.1))+"px";
+itemButton.style.left=(width*0.45)+"px";
+itemButton.style.height=(width*0.1)+"px";
+itemButton.style.width=(width*0.1)+"px";
 setItemBackground(0);
+itemButton.innerHTML="aaa";
 document.body.appendChild(itemButton);
 itemButton.appendChild(itemImg);
 function pxstring(v){
