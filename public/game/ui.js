@@ -75,7 +75,7 @@ resultTable.style.position="absolute";
 resultTable.style.zIndex="1";
 resultTable.style.color="white";
 resultTable.style.top= (height/2)+"px";
-resultTable.style.left= width/2+"px";
+resultTable.style.left= (width/2)+"px";
 resultTable.style.fontSize="30px";
 
 //button
@@ -127,7 +127,7 @@ itemImg.style.backgroundImage="url('textures/toyama.gif')";
 itemImg.style.width="100%";
 itemImg.style.height="100%";
 itemImg.style.backgroundSize="cover";
-
+itemImg.style.position="relative";
 var itemtextures=[
     "",
     "",
