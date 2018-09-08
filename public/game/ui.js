@@ -121,13 +121,17 @@ var tbody=document.createElement("tbody");
 resultTable.appendChild(tbody);
 document.body.appendChild(resultTable);
 var tabletxt1="";
-
+/*
 var itemImg=document.createElement("div");
 itemImg.style.backgroundImage="url('textures/toyama.gif')";
 itemImg.style.width=(width*0.1)+"px";
 itemImg.style.height=(width*0.1)+"px";
 itemImg.style.backgroundSize="cover";
-
+*/
+var itemImg=document.createElement("img");
+itemImg.style.width=(width*0.1)+"px";
+itemImg.style.height=(width*0.1)+"px";
+itemImg.style.backgroundSize="cover";
 var itemtextures=[
     "",
     "",
@@ -162,8 +166,18 @@ function pxv(v){
 function setItemBackground(srcId){
     //if(srcId>=itemtextures.length)
     //    return;
+    /*
     var target="url('"+itemtextures[srcId]+"')";
-    if(itemImg.style.backgroundImage!=target)  itemImg.style.backgroundImage=target;
+    if(itemImg.style.backgroundImage!=target)  itemImg.style.backgroundImage=target;*/
+    var target=itemtextures[srcId];
+    if(itemImg.src!=target){ 
+        if(target==""){
+            itemImg.style.visibility="hidden";
+        }else{
+            itemImg.style.visibility="visible";
+        }
+        itemImg.src=target;
+    }
 }
 var logArr=[];
 function ui(){
