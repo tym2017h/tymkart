@@ -554,7 +554,7 @@ function timer(){
         camera.position.y=player.mesh.position.y+3.75;
         camera.position.z=player.mesh.position.z-Math.cos(player.rot)*12;
         //camera.rotation.x=Math.PI/4;
-        arrow.position.set(player.mesh.position.x,player.mesh.position.y+3.75,player.mesh.position.z);
+        arrow.position.set(player.mesh.position.x,player.mesh.position.y+1.75,player.mesh.position.z);
         arrow.rotation.y=-Math.atan2(cp[player.cp].x-player.pos.x,cp[player.cp].z-player.pos.z);
         var p={x:player.mesh.position.x,y:player.mesh.position.y,z:player.mesh.position.z};
         camera.lookAt(p);
